@@ -2,7 +2,11 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0f0b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>C++ — Complete Professional Reference</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +26,7 @@
   --pur:#7a8c60;--purd:#303c20;
   --red:#b05030;--redd:#4a1e10;
   --cyn:#4e8c6c;
-  --txt:#FFFFFF;--txt2:#6a7a54;--txt3:#3a4228;--txt4:#222814;
+  --txt:#c0cca8;--txt2:#6a7a54;--txt3:#3a4228;--txt4:#222814;
   --code-bg:#090b07;
 }
 /* ─── VERY DARK THEME (deeper charcoal, richer greens & browns) ── */
@@ -77,7 +81,7 @@ a{color:var(--acc);text-decoration:none}
 .tb-ver{font-family:var(--mono);font-size:9.5px;background:var(--accd);color:var(--acc);border:1px solid rgba(90,148,96,.4);padding:2px 7px;border-radius:999px;font-weight:700;letter-spacing:.5px}
 
 /* SIDEBAR */
-#sb{position:fixed;top:var(--tbh);left:0;bottom:0;width:var(--sbw);background:var(--sur);border-right:1px solid var(--border);overflow-y:auto;z-index:200;display:flex;flex-direction:column;transition:background .3s}
+#sb{position:fixed;top:var(--tbh);left:0;bottom:0;width:var(--sbw);background:var(--sur);border-right:1px solid var(--border);overflow-y:auto;z-index:200;display:flex;flex-direction:column;transition:background .3s,transform .28s cubic-bezier(.4,0,.2,1)}
 .sg{padding:4px 0}
 .sg-h{padding:7px 16px 3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--txt3);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:var(--tr)}
 .sg-h:hover{color:var(--txt2)}
@@ -116,7 +120,7 @@ a{color:var(--acc);text-decoration:none}
 .hb-g{border-color:rgba(106,184,112,.35);color:var(--grn);background:rgba(106,184,112,.09)}
 .hb-p{border-color:rgba(122,140,96,.35);color:var(--pur);background:rgba(122,140,96,.09)}
 .hb-a{border-color:rgba(154,104,56,.35);color:var(--amb);background:rgba(154,104,56,.09)}
-#hterm{font-family:var(--mono);font-size:12.5px;line-height:2;color:var(--txt2);min-height:72px;max-width:640px;padding:14px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--rlg);transition:background .3s}
+#hterm{font-family:var(--mono);font-size:12.5px;line-height:2;color:var(--txt2);min-height:72px;max-width:640px;width:100%;padding:14px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--rlg);overflow-x:auto;transition:background .3s}
 .h-stats{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px}
 .hs{display:flex;flex-direction:column;gap:2px}
 .hs-v{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--acc)}
@@ -309,7 +313,30 @@ textarea{resize:none;width:100%}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 footer{padding:28px 56px;border-top:1px solid var(--border);background:var(--sur);text-align:center;font-size:12.5px;color:var(--txt3);transition:background .3s}
 
-/* ── RTL / ARABIC SUPPORT ──────────────────── */
+/* ── MOBILE TABLE SCROLL WRAPPER ─────────────── */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--rlg)}
+/* ── SAFE AREA (notched phones: iPhone X+) ───── */
+@supports(padding:max(0px)){
+  #tb{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  #sb{padding-bottom:env(safe-area-inset-bottom)}
+  footer{padding-bottom:max(28px,env(safe-area-inset-bottom))}
+  @media(max-width:800px){
+    .sec{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+    .hero{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+  }
+}
+/* ── TOUCH TARGETS (min 44×44px tap area) ──────── */
+.btn{min-height:36px}
+.ni{min-height:38px}
+.te-b,.tbtn,.lbtn{min-height:34px}
+select,input[type=number],input[type=text]{min-height:34px}
+/* ── PREVENT TEXT SIZE ADJUST ───────────────────── */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* ── SMOOTH MOMENTUM SCROLL ─────────────────────── */
+#mn,#sb{-webkit-overflow-scrolling:touch}
+/* ── CODE BLOCK HORIZONTAL SCROLL ───────────────── */
+.cw{overflow:hidden}
+pre code.hljs{word-break:normal;overflow-wrap:normal;white-space:pre}
 [dir="rtl"] #sb{right:0;left:auto;border-right:none;border-left:1px solid var(--border)}
 [dir="rtl"] #mn{margin-left:0;margin-right:var(--sbw)}
 [dir="rtl"] #sr{left:0;right:var(--sbw)}
@@ -340,13 +367,136 @@ footer{padding:28px 56px;border-top:1px solid var(--border);background:var(--sur
 [dir="rtl"] .g2,[dir="rtl"] .g3,[dir="rtl"] .gL,[dir="rtl"] .gR{direction:rtl}
 [dir="rtl"] .hero{direction:rtl}
 [dir="rtl"] footer{direction:rtl}
-@media(max-width:960px){.g2,.gL,.gR{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr}}
-@media(max-width:800px){#sb{display:none}#mn{margin-left:0}.sec{padding:32px 20px}.hero{padding:32px 20px}footer{padding:20px}}
-@media(max-width:540px){.g3{grid-template-columns:1fr}}
+/* ══ TABLET  ≤1024px ═══════════════════════════ */
+@media(max-width:1024px){
+  :root{--sbw:230px}
+  .g3{grid-template-columns:1fr 1fr}
+  .sec{padding:44px 40px}
+  .hero{padding:44px 40px}
+  pre code.hljs{font-size:12px}
+}
+/* ══ TABLET  ≤860px ════════════════════════════ */
+@media(max-width:860px){
+  .g2,.gL,.gR{grid-template-columns:1fr}
+  .g3{grid-template-columns:1fr 1fr}
+  .sec{padding:36px 28px}
+  .hero{padding:36px 28px}
+  .t{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .cw pre{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .demo-h{font-size:12px}
+  footer{padding:22px 28px}
+}
+/* ══ HAMBURGER BUTTON — visible < 800px ════════ */
+#ham-btn{display:none;background:none;border:none;cursor:pointer;padding:6px 8px;color:var(--txt2);font-size:20px;line-height:1;transition:color .15s;flex-shrink:0}
+#ham-btn:hover{color:var(--acc)}
+#sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:199;backdrop-filter:blur(2px)}
+/* ══ MOBILE  ≤800px ════════════════════════════ */
+@media(max-width:800px){
+  :root{--tbh:48px}
+  #ham-btn{display:flex;align-items:center;justify-content:center}
+  /* Sidebar becomes slide-over drawer */
+  #sb{transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);box-shadow:4px 0 32px rgba(0,0,0,.6)}
+  #sb.open{transform:translateX(0)}
+  [dir="rtl"] #sb{transform:translateX(100%);box-shadow:-4px 0 32px rgba(0,0,0,.6)}
+  [dir="rtl"] #sb.open{transform:translateX(0)}
+  /* Main takes full width */
+  #mn{margin-left:0!important;margin-right:0!important}
+  [dir="rtl"] #mn{margin-left:0!important;margin-right:0!important}
+  /* Search results full width */
+  #sr{left:0!important;right:0!important}
+  /* Hide tb-ver on small screens */
+  .tb-ver{display:none}
+  /* Shrink lang select */
+  .lang-sel{max-width:110px;font-size:11px;padding:3px 6px}
+  /* Hero */
+  .hero{padding:28px 18px}
+  .h-tit{font-size:clamp(52px,18vw,88px);letter-spacing:-3px}
+  .h-stats{gap:20px}
+  .hs-v{font-size:20px}
+  /* Sections */
+  .sec{padding:28px 18px}
+  .g2,.gL,.gR,.g3{grid-template-columns:1fr}
+  .gc{grid-column:1}
+  /* Tables scroll */
+  .card,.demo{overflow:hidden}
+  .t{font-size:11.5px}
+  .t th,.t td{padding:6px 9px;white-space:nowrap}
+  /* Code blocks */
+  pre code.hljs{font-size:11.5px;padding:12px 14px}
+  .ct{padding:5px 10px}
+  /* Controls wrap nicely */
+  .ctls{gap:8px}
+  .cg{min-width:0}
+  input[type=number],input[type=text]{min-width:0;width:72px}
+  select{min-width:100px}
+  /* Sort viz */
+  .sviz{height:72px}
+  /* Thread viz */
+  .thviz{font-size:10px}
+  .th-l{width:66px;font-size:9.5px}
+  /* Cards */
+  .ch{font-size:11px;padding:8px 13px}
+  .cb{padding:12px}
+  .db{padding:12px}
+  /* Demo header */
+  .demo-h{padding:8px 13px}
+  /* Footer */
+  footer{padding:20px 18px}
+  /* Keyword grid smaller */
+  .kw{font-size:10.5px;padding:2px 6px}
+  /* Callouts */
+  .co{padding:9px 12px;font-size:12px}
+  /* Sec desc */
+  .sec-desc{font-size:13px}
+  .sec-tit{font-size:20px}
+  /* Prevent horizontal overflow */
+  body{overflow-x:hidden}
+  .hero::before{display:none}
+}
+/* ══ PHONE  ≤520px ═════════════════════════════ */
+@media(max-width:520px){
+  .h-tit{font-size:clamp(44px,16vw,72px);letter-spacing:-2px}
+  .h-bgs{gap:5px}
+  .hb{font-size:9px;padding:2px 7px}
+  .h-stats{gap:14px}
+  .hs-v{font-size:17px}
+  .hs-l{font-size:8.5px}
+  .sec{padding:22px 14px}
+  .hero{padding:22px 14px}
+  .sec-tit{font-size:18px;letter-spacing:-.5px}
+  .sec-num{font-size:8.5px}
+  pre code.hljs{font-size:11px;padding:10px 12px}
+  .t th,.t td{padding:5px 7px;font-size:11px}
+  .btn{padding:5px 10px;font-size:12px}
+  .btn-s{padding:3px 8px;font-size:11px}
+  input[type=number],input[type=text]{width:66px}
+  /* topbar tighter */
+  .tb-logo{font-size:17px}
+  .tb-srch{max-width:160px}
+  .lang-sel{max-width:90px;font-size:10.5px}
+  /* inh diagram tighter */
+  .inh-nd{padding:6px 11px;font-size:11.5px;min-width:82px}
+  .inh-row{gap:12px}
+  /* Keyword grid */
+  .kw-grid{gap:4px}
+  .kw{font-size:10px;padding:1px 5px}
+  footer{font-size:11.5px}
+}
+/* ══ VERY SMALL PHONE ≤380px ════════════════════ */
+@media(max-width:380px){
+  .tb-srch{display:none}
+  .h-tit{font-size:clamp(38px,14vw,60px)}
+  .sec{padding:18px 12px}
+  .hero{padding:18px 12px}
+  pre code.hljs{font-size:10.5px}
+  .ctls{flex-direction:column;align-items:flex-start}
+  .lang-sel{max-width:80px;font-size:10px}
+}
 </style>
 </head>
 <body>
 <div id="tb">
+  <button id="ham-btn" onclick="toggleSB()" aria-label="Menu">☰</button>
   <div class="tb-logo" onclick="goTo('top')">C<span>++</span></div>
   <div class="tb-div"></div>
   <div class="tb-srch"><span class="tb-srch-ic">⌕</span><input type="text" id="si" placeholder="Search keywords, topics, operators..." oninput="doSearch(this.value)" autocomplete="off"></div>
@@ -370,6 +520,7 @@ footer{padding:28px 56px;border-top:1px solid var(--border);background:var(--sur
   </div>
 </div>
 <div id="sr"></div>
+<div id="sb-overlay" onclick="closeSB()"></div>
 
 <nav id="sb">
 <div class="sg">
@@ -3881,6 +4032,12 @@ function setLang(code) {
     sb.style.borderRight = isAr ? 'none' : '';
     sb.style.borderLeft  = isAr ? '1px solid var(--border)' : '';
   }
+  // fix transform direction for RTL mobile drawer
+  if (window.innerWidth <= 800) {
+    if (sb && !sb.classList.contains('open')) {
+      sb.style.transform = isAr ? 'translateX(100%)' : 'translateX(-100%)';
+    }
+  }
   if (mn) {
     mn.style.marginLeft  = isAr ? '0' : '';
     mn.style.marginRight = isAr ? 'var(--sbw)' : '';
@@ -3951,7 +4108,56 @@ function copyCode(btn) {
   }).catch(() => { btn.textContent = 'Error'; });
 }
 
-// ── SEARCH ──
+// ── MOBILE SIDEBAR ───────────────────────────
+function toggleSB() {
+  const sb = document.getElementById('sb');
+  const ov = document.getElementById('sb-overlay');
+  const btn = document.getElementById('ham-btn');
+  const open = sb.classList.toggle('open');
+  ov.style.display = open ? 'block' : 'none';
+  btn.textContent = open ? '✕' : '☰';
+  btn.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeSB() {
+  const sb = document.getElementById('sb');
+  const ov = document.getElementById('sb-overlay');
+  const btn = document.getElementById('ham-btn');
+  sb.classList.remove('open');
+  ov.style.display = 'none';
+  btn.textContent = '☰';
+  btn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+// Close sidebar on nav item click (mobile)
+document.addEventListener('click', e => {
+  if (e.target.closest('.ni') && window.innerWidth <= 800) closeSB();
+});
+
+// Close sidebar on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('sb').classList.contains('open')) closeSB();
+    closeSR();
+  }
+});
+
+// Touch swipe to close sidebar (swipe left to close on mobile)
+(function() {
+  let startX = 0, startY = 0;
+  document.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = Math.abs(e.changedTouches[0].clientY - startY);
+    const sb = document.getElementById('sb');
+    if (sb.classList.contains('open') && dx < -60 && dy < 80) closeSB();
+    if (!sb.classList.contains('open') && dx > 60 && dy < 80 && startX < 30) toggleSB();
+  }, { passive: true });
+})();
 const SEARCH_INDEX = [
   {id:'s01',t:'Introduction Philosophy C++ history Stroustrup paradigm'},
   {id:'s02',t:'Setup Compilation CMake g++ clang flags -O2 -Wall header source ODR'},
