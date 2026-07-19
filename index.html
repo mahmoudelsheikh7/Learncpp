@@ -97,7 +97,7 @@ a{color:var(--acc);text-decoration:none}
 .sb-pad{height:20px}
 
 /* MAIN */
-#mn{margin-left:var(--sbw);margin-top:var(--tbh);min-width:0}
+#mn{margin-left:var(--sbw);margin-top:var(--tbh);min-width:0;min-height:calc(100vh - var(--tbh))}
 #sr{display:none;position:fixed;top:var(--tbh);left:var(--sbw);right:0;z-index:250;background:var(--sur);border-bottom:1px solid var(--border);padding:12px 28px;max-height:55vh;overflow-y:auto;transition:background .3s}
 #sr.on{display:block}
 .si{padding:7px 10px;border-radius:var(--r);cursor:pointer;transition:var(--tr);border-bottom:1px solid var(--border)}
@@ -127,8 +127,9 @@ a{color:var(--acc);text-decoration:none}
 .hs-l{font-size:9.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:1.2px}
 
 /* SECTIONS */
-.sec{padding:52px 56px;border-bottom:1px solid var(--border);transition:background .3s}
+.sec{padding:52px 56px;transition:background .3s}.sec-page .sec{border-bottom:none}
 .sec.alt{background:var(--sur)}
+.sec-page.active{background:var(--bg)}
 .sec.nor{background:var(--bg)}
 .sec-hd{margin-bottom:28px}
 .sec-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
@@ -214,7 +215,7 @@ select option{background:var(--card)}
 textarea{resize:none;width:100%}
 .ctls{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:12px;align-items:flex-end}
 .cg{display:flex;flex-direction:column;gap:4px}
-.btn{padding:6px 13px;border-radius:var(--r);font-family:var(--body);font-size:12.5px;font-weight:500;cursor:pointer;border:none;transition:var(--tr);display:inline-flex;align-items:center;gap:5px}
+.btn{padding:6px 13px;border-radius:var(--r);touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:var(--body);font-size:12.5px;font-weight:500;cursor:pointer;border:none;transition:var(--tr);display:inline-flex;align-items:center;gap:5px}
 .bp{background:var(--acc);color:#000}.bp:hover{filter:brightness(1.15);transform:translateY(-1px)}
 .bs{background:var(--raised);color:var(--txt2);border:1px solid var(--border)}.bs:hover{color:var(--txt);border-color:var(--borderhi)}
 .bg{background:var(--grn);color:#000}.bg:hover{filter:brightness(1.1);transform:translateY(-1px)}
@@ -313,7 +314,123 @@ textarea{resize:none;width:100%}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 footer{padding:28px 56px;border-top:1px solid var(--border);background:var(--sur);text-align:center;font-size:12.5px;color:var(--txt3);transition:background .3s}
 
-/* ── MOBILE TABLE SCROLL WRAPPER ─────────────── */
+/* ══ MULTI-PAGE SYSTEM ══════════════════════════════════════ */
+.page{display:none;min-height:calc(100vh - var(--tbh));animation:pgIn .22s ease}
+.page.active{display:block}
+#page-home.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── HOME PAGE ─────────────────────────────────────── */
+.home-page{background:var(--bg)}
+.home-hero{padding:52px 56px 40px;background:var(--sur);border-bottom:1px solid var(--border)}
+.home-search{max-width:520px;position:relative;margin-top:22px}
+.home-search input{width:100%;background:var(--raised);border:2px solid var(--border);color:var(--txt);
+  padding:12px 18px 12px 44px;border-radius:var(--rlg);font-size:15px;outline:none;
+  transition:var(--tr);font-family:var(--body)}
+.home-search input:focus{border-color:var(--acc);background:var(--card)}
+.home-search-ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--txt3);font-size:16px;pointer-events:none}
+.home-stats{display:flex;gap:32px;margin-top:28px;flex-wrap:wrap}
+.hstat{display:flex;flex-direction:column;gap:2px}
+.hstat-v{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--acc)}
+.hstat-l{font-size:9.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:1px}
+
+.home-body{padding:36px 56px 80px;flex:1}
+.cat-section{margin-bottom:36px}
+.cat-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.cat-line{flex:1;height:1px;background:var(--border)}
+.cat-label{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.8px;white-space:nowrap}
+.sec-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.sec-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rlg);
+  padding:16px;cursor:pointer;transition:var(--tr);display:flex;flex-direction:column;gap:8px;
+  position:relative;overflow:hidden}
+.sec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--card-accent,var(--border));transition:var(--tr)}
+.sec-card:hover{border-color:var(--borderhi);transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.sec-card:hover::before{background:var(--card-accent,var(--acc))}
+.sec-card{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.sc-top{display:flex;align-items:center;gap:8px}
+.sc-num{font-family:var(--mono);font-size:9.5px;color:var(--txt3);letter-spacing:1px}
+.sc-icon{font-size:18px;margin-left:auto}
+.sc-title{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--txt);line-height:1.35}
+.sc-desc{font-size:11.5px;color:var(--txt2);line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sc-badge{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;
+  padding:2px 7px;border-radius:999px;margin-top:auto}
+
+/* ── BREADCRUMB ────────────────────────────────────── */
+.breadcrumb{display:flex;align-items:center;gap:6px;padding:10px 56px;
+  background:var(--raised);border-bottom:1px solid var(--border);
+  font-size:12px;color:var(--txt3);flex-wrap:wrap}
+.bc-home{cursor:pointer;color:var(--txt2);transition:color .15s}
+.bc-home:hover{color:var(--acc)}
+.bc-sep{color:var(--border)}
+.bc-cur{color:var(--txt);font-weight:600}
+.bc-num{font-family:var(--mono);color:var(--acc)}
+.bc-progress{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--txt3)}
+
+/* ── PREV / NEXT NAV ───────────────────────────────── */
+.sec-nav{display:flex;align-items:center;justify-content:space-between;
+  padding:20px 56px;border-top:1px solid var(--border);background:var(--sur);gap:12px}
+.sec-nav-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;
+  background:var(--raised);border:1px solid var(--border);color:var(--txt2);
+  border-radius:var(--r);cursor:pointer;transition:var(--tr);font-size:13px;
+  font-family:var(--body);font-weight:500;min-width:0;max-width:44%}
+.sec-nav-btn:hover{color:var(--txt);border-color:var(--borderhi);background:var(--card)}
+.sec-nav-btn.next{flex-direction:row-reverse;text-align:right}
+.sec-nav-btn.home-btn{color:var(--acc);border-color:var(--accd)}
+.sec-nav-btn.home-btn:hover{background:var(--accd)}
+.snb-label{font-size:9px;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;display:block}
+.snb-title{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+
+/* ── BOTTOM MOBILE NAV ─────────────────────────────── */
+#bot-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;
+  background:rgba(29,32,33,.97);backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  display:none;align-items:stretch;height:56px}
+#bot-nav.visible{display:flex}
+.bn-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;background:none;border:none;color:var(--txt2);cursor:pointer;
+  transition:color .15s;font-size:11px;font-family:var(--body);padding:6px 0}
+.bn-btn:hover,.bn-btn.active{color:var(--acc)}
+.bn-icon{font-size:18px;line-height:1}
+.bn-label{font-size:9.5px;letter-spacing:.3px}
+.bn-sep{width:1px;background:var(--border);align-self:stretch;margin:8px 0}
+
+/* ── PROGRESS BAR ──────────────────────────────────── */
+#prog-bar{position:fixed;top:var(--tbh);left:0;right:0;height:2px;
+  background:var(--border);z-index:150;transform-origin:left;transition:transform .3s ease}
+#prog-bar-fill{height:100%;background:var(--acc);width:100%;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s ease}
+
+/* ── RESPONSIVE OVERRIDES ──────────────────────────── */
+@media(max-width:860px){
+  .breadcrumb{padding:8px 20px}.sec-nav{padding:14px 20px}
+  .home-hero{padding:32px 24px 28px}.home-body{padding:24px 24px 80px}
+  .home-stats{gap:18px}.hstat-v{font-size:18px}
+}
+@media(max-width:800px){
+  #bot-nav{display:flex}
+  #mn{padding-bottom:56px}
+  .sec-nav{padding:12px 16px}
+  .snb-title{max-width:110px}
+  .breadcrumb{padding:7px 16px;font-size:11px}
+  .bc-progress{display:none}
+  .home-hero{padding:24px 18px 20px}.home-body{padding:18px 18px 80px}
+  .home-search input{font-size:14px;padding:10px 16px 10px 38px}
+  .sec-cards{grid-template-columns:1fr 1fr;gap:9px}
+  .sec-card{padding:12px}
+  .sc-title{font-size:12px}
+  .home-stats{gap:14px}
+}
+@media(max-width:520px){
+  .sec-cards{grid-template-columns:1fr}
+  .sec-nav-btn{padding:8px 12px}
+  .snb-title{max-width:100px;font-size:12px}
+  .breadcrumb{display:none}
+}
 .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--rlg)}
 /* ── SAFE AREA (notched phones: iPhone X+) ───── */
 @supports(padding:max(0px)){
@@ -492,12 +609,328 @@ pre code.hljs{word-break:normal;overflow-wrap:normal;white-space:pre}
   .ctls{flex-direction:column;align-items:flex-start}
   .lang-sel{max-width:80px;font-size:10px}
 }
+
+/* ═══════════════════════════════════════════════════════
+   MULTI-PAGE / SPA LAYOUT
+═══════════════════════════════════════════════════════ */
+html,body{height:100%;overflow:hidden}
+#mn{height:calc(100vh - var(--tbh));overflow:hidden;position:relative;display:flex;flex-direction:column}
+
+/* Every page (hero + sections) hidden by default */
+.page{display:none;flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.page.pg-active{display:block;animation:pgIn .22s ease}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Home / TOC page */
+#pg-home{background:var(--bg);transition:background .3s}
+.home-wrap{max-width:1100px;margin:0 auto;padding:44px 48px}
+.home-title{font-family:var(--mono);font-size:clamp(38px,6vw,64px);font-weight:800;letter-spacing:-3px;line-height:.9;margin-bottom:12px}
+.home-title .ac{color:var(--acc)}.home-title .dm{color:var(--txt3)}
+.home-sub{font-size:14px;color:var(--txt2);margin-bottom:36px;max-width:600px;line-height:1.7}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-bottom:40px}
+.toc-group{background:var(--sur);border:1px solid var(--border);border-radius:var(--rlg);overflow:hidden;transition:border-color .2s,background .3s}
+.toc-group:hover{border-color:var(--borderhi)}
+.toc-gh{padding:10px 16px;background:var(--raised);border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--txt3);display:flex;align-items:center;gap:7px;transition:background .3s}
+.toc-gh-ic{font-size:14px}
+.toc-items{padding:8px 0}
+.toc-item{display:flex;align-items:center;gap:10px;padding:7px 16px;cursor:pointer;transition:background .15s;text-decoration:none;color:var(--txt2);font-size:13px}
+.toc-item:hover{background:var(--raised);color:var(--txt)}
+.toc-item:hover .toc-num{color:var(--acc)}
+.toc-num{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:1px;flex-shrink:0;width:26px}
+.toc-name{flex:1}
+.toc-arrow{font-size:10px;color:var(--txt3);flex-shrink:0;opacity:0;transition:opacity .15s}
+.toc-item:hover .toc-arrow{opacity:1}
+
+/* Page navigation header (breadcrumb + arrows) */
+.pg-nav{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--raised);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;transition:background .3s}
+.pg-nav-home{background:none;border:1px solid var(--border);color:var(--txt3);font-family:var(--body);font-size:12px;padding:4px 9px;border-radius:var(--r);cursor:pointer;transition:var(--tr)}
+.pg-nav-home:hover{color:var(--txt);border-color:var(--borderhi)}
+.pg-breadcrumb{font-family:var(--mono);font-size:11px;color:var(--txt3);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pg-breadcrumb .pg-num{color:var(--acc);margin-right:6px}
+.pg-breadcrumb .pg-title-bc{color:var(--txt2)}
+.pg-arrows{display:flex;gap:6px}
+.pg-arr{background:var(--raised);border:1px solid var(--border);color:var(--txt2);font-size:13px;width:30px;height:30px;border-radius:var(--r);cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center}
+.pg-arr:hover{color:var(--acc);border-color:var(--acc)}
+.pg-arr:disabled{opacity:.3;cursor:default}
+.pg-progress{position:absolute;bottom:0;left:0;height:2px;background:var(--acc);transition:width .3s ease;border-radius:0 2px 2px 0}
+
+/* BOTTOM NAV — mobile only */
+#bnav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:250;background:var(--sur);border-top:1px solid var(--border);padding:0;padding-bottom:env(safe-area-inset-bottom);transition:background .3s}
+.bnav-inner{display:flex;align-items:stretch;height:52px}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--txt3);cursor:pointer;transition:color .15s;font-size:10px;font-family:var(--body);font-weight:500;padding:0;-webkit-tap-highlight-color:transparent}
+.bnav-btn:hover,.bnav-btn.bnav-on{color:var(--acc)}
+.bnav-btn:active{background:rgba(215,153,33,.07)}
+.bnav-ic{font-size:18px;line-height:1}
+.bnav-lbl{font-size:9px;letter-spacing:.3px}
+.bnav-divider{width:1px;background:var(--border);flex-shrink:0;margin:10px 0}
+
+@media(max-width:800px){
+  #bnav{display:block}
+  #mn{height:calc(100vh - var(--tbh) - 52px - env(safe-area-inset-bottom))}
+  .sec{padding:22px 16px 40px}
+  .hero-wrap{padding:24px 16px}
+  .home-wrap{padding:24px 16px}
+  .pg-nav{padding:8px 14px}
+}
+@media(max-width:520px){
+  .toc-grid{grid-template-columns:1fr}
+  .home-wrap{padding:18px 12px}
+}
+/* Scrollbar inside pages */
+.page::-webkit-scrollbar{width:5px}
+.page::-webkit-scrollbar-track{background:transparent}
+.page::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ════════════════════════════════════════════════════════
+   BOOK  THEME
+   ════════════════════════════════════════════════════════ */
+:root{
+  --page-w:620px; --spine-w:28px;
+  --book-shadow: -6px 0 18px rgba(0,0,0,.55), 6px 0 18px rgba(0,0,0,.55),
+                  0 12px 40px rgba(0,0,0,.7);
+  --paper-dark:#2a2520; --paper-mid:#32302f; --paper-hi:#3c3836;
+  --ink:#ebdbb2; --ink2:#a89984; --ink3:#665c54;
+  --chapter-col:#d79921; --spine-col:#1a1714;
+  --corner:#1d1b18;
+}
+
+/* ── outer shell ─────────────────────────────── */
+body.book-mode{background:#0e0d0b;overflow-x:hidden}
+body.book-mode #sb,
+body.book-mode #ham-btn,
+body.book-mode #bot-nav,
+body.book-mode #prog-bar{display:none!important}
+
+body.book-mode #mn{
+  margin:0 auto; max-width:calc(var(--page-w)*2 + var(--spine-w) + 32px);
+  padding:0; background:transparent;
+}
+
+/* ── book wrapper ────────────────────────────── */
+.book-wrap{
+  display:flex; align-items:stretch; min-height:calc(100vh - var(--tbh));
+  box-shadow:var(--book-shadow); margin:0 auto; position:relative;
+}
+
+/* ── left & right pages ──────────────────────── */
+.bk-left,.bk-right{
+  flex:1; background:var(--paper-dark);
+  padding:52px 44px 80px; overflow:hidden; position:relative;
+  transition:background .3s;
+}
+.bk-left{
+  border-right:none;
+  background:linear-gradient(to right,var(--paper-dark) 92%,#1e1b17 100%);
+}
+.bk-right{
+  border-left:none;
+  background:linear-gradient(to left,var(--paper-dark) 92%,#1e1b17 100%);
+}
+
+/* ── spine ───────────────────────────────────── */
+.bk-spine{
+  width:var(--spine-w); flex-shrink:0; background:var(--spine-col);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; z-index:2;
+  box-shadow:-3px 0 12px rgba(0,0,0,.5), 3px 0 12px rgba(0,0,0,.5);
+}
+.bk-spine::before,.bk-spine::after{
+  content:''; position:absolute; top:0; bottom:0; width:3px;
+  background:linear-gradient(to bottom,#3a3530,#1a1714,#3a3530);
+}
+.bk-spine::before{left:0} .bk-spine::after{right:0}
+.bk-spine-txt{
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  font-family:var(--mono); font-size:9px; font-weight:700;
+  letter-spacing:2.5px; color:#504840; text-transform:uppercase;
+  user-select:none;
+}
+
+/* ── page header (chapter line) ──────────────── */
+.bk-hdr{
+  position:absolute; top:22px; left:44px; right:44px;
+  display:flex; align-items:center; gap:14px;
+  border-bottom:1px solid rgba(168,153,132,.12); padding-bottom:8px;
+  font-size:10px; color:var(--ink3); font-family:var(--mono);
+  letter-spacing:1.2px; text-transform:uppercase;
+}
+.bk-hdr-num{color:var(--chapter-col); font-weight:700}
+.bk-hdr-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-hdr-right .bk-hdr{text-align:right; flex-direction:row-reverse}
+
+/* ── page number footer ──────────────────────── */
+.bk-ftr{
+  position:absolute; bottom:24px; left:44px; right:44px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-family:var(--mono); font-size:10px; color:var(--ink3);
+  border-top:1px solid rgba(168,153,132,.1); padding-top:8px;
+}
+.bk-pgnum{
+  font-size:11px; font-weight:700; color:var(--ink3);
+  width:28px; height:28px; display:flex; align-items:center;
+  justify-content:center; border:1px solid rgba(168,153,132,.15);
+  border-radius:50%;
+}
+
+/* ── page content ─────────────────────────────── */
+.bk-body{font-family:var(--body); line-height:1.75; color:var(--ink); font-size:14px}
+.bk-body h2.sec-tit{
+  font-family:var(--mono); font-size:19px; color:var(--chapter-col);
+  margin:0 0 6px; font-weight:700; line-height:1.25;
+  border-bottom:2px solid rgba(215,153,33,.25); padding-bottom:10px;
+}
+.bk-body .sec-desc{font-size:13.5px; line-height:1.8; color:var(--ink2); margin:14px 0 22px}
+.bk-body .sec-meta{margin-bottom:10px}
+.bk-body .card{margin-bottom:18px; border-radius:6px}
+.bk-body .t{font-size:12px}
+.bk-body .t th,.bk-body .t td{padding:6px 10px}
+
+/* ── code blocks in book ──────────────────────── */
+.bk-right .cw{border-radius:6px; overflow:hidden}
+.bk-right pre code.hljs{font-size:11.5px; padding:16px; border-radius:0}
+.bk-right .ct{padding:6px 12px; background:var(--paper-hi)}
+
+/* ── section number drop-cap style ──────────────*/
+.bk-secnum{
+  float:left; font-family:var(--mono); font-size:52px; line-height:1;
+  color:rgba(215,153,33,.2); font-weight:900; margin-right:10px;
+  margin-top:4px; letter-spacing:-2px;
+}
+
+/* ── page-turn animation ──────────────────────── */
+@keyframes bkFlipFwd{
+  0%  {opacity:1; transform:translateX(0)}
+  40% {opacity:0; transform:translateX(-28px)}
+  100%{opacity:1; transform:translateX(0)}
+}
+@keyframes bkFlipBwd{
+  0%  {opacity:1; transform:translateX(0)}
+  40% {opacity:0; transform:translateX(28px)}
+  100%{opacity:1; transform:translateX(0)}
+}
+.book-wrap.flip-fwd{animation:bkFlipFwd .38s ease}
+.book-wrap.flip-bwd{animation:bkFlipBwd .38s ease}
+
+/* ── corner curl ─────────────────────────────── */
+.bk-right::after{
+  content:''; position:absolute; bottom:0; right:0;
+  width:36px; height:36px;
+  background:linear-gradient(135deg,var(--paper-mid) 50%,var(--corner) 50%);
+  border-top-left-radius:4px; cursor:pointer; opacity:.6;
+  transition:all .2s; z-index:10;
+}
+.bk-right:hover::after{width:52px;height:52px;opacity:.9}
+.bk-left::after{
+  content:''; position:absolute; bottom:0; left:0;
+  width:36px; height:36px;
+  background:linear-gradient(225deg,var(--paper-mid) 50%,var(--corner) 50%);
+  border-top-right-radius:4px; opacity:.6; transition:all .2s;
+}
+.bk-left:hover::after{width:52px;height:52px;opacity:.9}
+
+/* ── prev/next corner buttons ────────────────── */
+.bk-nav-prev,.bk-nav-next{
+  position:absolute; bottom:14px; font-size:12px; font-family:var(--mono);
+  color:var(--ink3); background:none; border:none; cursor:pointer;
+  transition:color .15s; padding:6px 8px; z-index:20;
+}
+.bk-nav-prev{left:44px} .bk-nav-next{right:44px}
+.bk-nav-prev:hover,.bk-nav-next:hover{color:var(--chapter-col)}
+
+/* ── BOOK COVER (home page) ──────────────────── */
+.book-cover-wrap{
+  display:flex; min-height:calc(100vh - var(--tbh));
+  background:linear-gradient(160deg,#1a1208 0%,#0e0b06 60%,#14100a 100%);
+  box-shadow:var(--book-shadow);
+}
+.book-cover-spine{
+  width:var(--spine-w); background:#0a0806; flex-shrink:0;
+  box-shadow:3px 0 12px rgba(0,0,0,.7); position:relative;
+}
+.book-cover-spine::before,.book-cover-spine::after{
+  content:''; position:absolute; top:0; bottom:0; width:2px;
+  background:linear-gradient(to bottom,#2a2010,#0a0806,#2a2010);
+}
+.book-cover-spine::before{left:0} .book-cover-spine::after{right:0}
+.book-cover{
+  flex:1; padding:60px 56px; display:flex; flex-direction:column;
+  justify-content:space-between; position:relative; overflow:hidden;
+}
+.book-cover::before{
+  content:''; position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(0deg,rgba(215,153,33,.018) 0px,rgba(215,153,33,.018) 1px,transparent 1px,transparent 22px),
+    repeating-linear-gradient(90deg,rgba(215,153,33,.018) 0px,rgba(215,153,33,.018) 1px,transparent 1px,transparent 22px);
+  pointer-events:none;
+}
+.bkcov-top{position:relative}
+.bkcov-pub{font-family:var(--mono);font-size:9.5px;color:#665c54;letter-spacing:3px;text-transform:uppercase;margin-bottom:44px}
+.bkcov-edition{
+  font-family:var(--mono); font-size:11px; color:rgba(215,153,33,.5);
+  letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;
+}
+.bkcov-title{
+  font-family:var(--mono); font-size:clamp(64px,10vw,96px); font-weight:900;
+  line-height:.9; letter-spacing:-4px; color:#ebdbb2;
+  text-shadow:0 2px 24px rgba(0,0,0,.8);
+}
+.bkcov-title .pp{color:var(--chapter-col)}
+.bkcov-sub{
+  margin-top:18px; font-size:14px; color:#665c54;
+  font-family:var(--body); max-width:420px; line-height:1.6;
+}
+.bkcov-rule{
+  width:100%; height:1px;
+  background:linear-gradient(to right,transparent,rgba(215,153,33,.5),transparent);
+  margin:36px 0;
+}
+.bkcov-toc-title{font-family:var(--mono);font-size:10px;color:#504840;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+.bkcov-toc{display:grid;grid-template-columns:1fr 1fr;gap:6px 28px}
+.bkcov-toc-item{
+  display:flex; align-items:baseline; gap:8px; cursor:pointer;
+  padding:4px 0; border-bottom:1px dotted rgba(80,72,64,.4);
+  transition:color .15s; font-size:12.5px;
+}
+.bkcov-toc-item:hover{color:var(--chapter-col)}
+.bkcov-toc-num{font-family:var(--mono);font-size:9.5px;color:#504840;flex-shrink:0;min-width:28px}
+.bkcov-toc-name{color:#a89984;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bkcov-toc-item:hover .bkcov-toc-name{color:var(--chapter-col)}
+.bkcov-bot{position:relative}
+.bkcov-stats{display:flex;gap:32px;margin-bottom:28px}
+.bkcov-stat{display:flex;flex-direction:column;gap:3px}
+.bkcov-stat-v{font-family:var(--mono);font-size:24px;font-weight:700;color:rgba(215,153,33,.7)}
+.bkcov-stat-l{font-size:9px;color:#504840;text-transform:uppercase;letter-spacing:1.5px}
+.bkcov-author{font-family:var(--mono);font-size:10px;color:#504840;letter-spacing:1px}
+
+/* ── RESPONSIVE (tablet/phone) ───────────────── */
+@media(max-width:900px){
+  :root{--page-w:340px; --spine-w:18px}
+  .bk-left,.bk-right{padding:40px 28px 72px}
+  .bk-hdr{left:28px;right:28px}
+  .bk-ftr{left:28px;right:28px}
+  .bk-nav-prev{left:28px} .bk-nav-next{right:28px}
+  .book-cover{padding:44px 36px}
+  .bkcov-toc{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  body.book-mode #ham-btn{display:flex!important}
+  body.book-mode #sb{display:flex!important}
+  .book-wrap{flex-direction:column}
+  .bk-spine{width:100%;height:14px;writing-mode:horizontal-tb}
+  .bk-spine-txt{writing-mode:horizontal-tb;transform:none;letter-spacing:3px}
+  .bk-left,.bk-right{padding:36px 22px 68px}
+  .book-cover-wrap{flex-direction:column}
+  .book-cover-spine{width:100%;height:12px}
+  .bkcov-toc{grid-template-columns:1fr}
+  .bkcov-title{font-size:clamp(52px,14vw,80px)}
+}
+
 </style>
 </head>
 <body>
 <div id="tb">
   <button id="ham-btn" onclick="toggleSB()" aria-label="Menu">☰</button>
-  <div class="tb-logo" onclick="goTo('top')">C<span>++</span></div>
+  <div class="tb-logo" onclick="navigate('home')">C<span>++</span></div>
   <div class="tb-div"></div>
   <div class="tb-srch"><span class="tb-srch-ic">⌕</span><input type="text" id="si" placeholder="Search keywords, topics, operators..." oninput="doSearch(this.value)" autocomplete="off"></div>
   <div class="tb-r">
@@ -521,94 +954,444 @@ pre code.hljs{word-break:normal;overflow-wrap:normal;white-space:pre}
 </div>
 <div id="sr"></div>
 <div id="sb-overlay" onclick="closeSB()"></div>
+<div id="prog-bar"><div id="prog-bar-fill"></div></div>
+<nav id="bot-nav">
+  <button class="bn-btn" id="bn-home" onclick="navigate('home')">
+    <span class="bn-icon">⌂</span><span class="bn-label" data-i18n="bn_home">Home</span>
+  </button>
+  <div class="bn-sep"></div>
+  <button class="bn-btn" id="bn-prev" onclick="navStep(-1)">
+    <span class="bn-icon">←</span><span class="bn-label" data-i18n="bn_prev">Prev</span>
+  </button>
+  <button class="bn-btn" id="bn-next" onclick="navStep(1)">
+    <span class="bn-icon">→</span><span class="bn-label" data-i18n="bn_next">Next</span>
+  </button>
+  <div class="bn-sep"></div>
+  <button class="bn-btn" id="bn-menu" onclick="toggleSB()">
+    <span class="bn-icon">☰</span><span class="bn-label" data-i18n="bn_menu">Menu</span>
+  </button>
+</nav>
 
 <nav id="sb">
 <div class="sg">
   <div class="sg-h" onclick="toggleSG(this)"><span data-i18n="g1">Foundations</span><span class="sg-arr">▾</span></div>
   <div class="sg-items">
-    <div class="ni on" onclick="goTo('s01')"><span class="ni-i">📖</span><span data-i18n="n01">Introduction</span><span class="ni-n">§01</span></div>
-    <div class="ni" onclick="goTo('s02')"><span class="ni-i">⚙️</span><span data-i18n="n02">Setup & Compilation</span><span class="ni-n">§02</span></div>
-    <div class="ni" onclick="goTo('s03')"><span class="ni-i">📐</span><span data-i18n="n03">Fundamental Types</span><span class="ni-n">§03</span></div>
-    <div class="ni" onclick="goTo('s04')"><span class="ni-i">📦</span><span data-i18n="n04">Variables & Storage</span><span class="ni-n">§04</span></div>
-    <div class="ni" onclick="goTo('s05')"><span class="ni-i">🔢</span><span data-i18n="n05">All Operators</span><span class="ni-n">§05</span></div>
-    <div class="ni" onclick="goTo('s06')"><span class="ni-i">🔀</span><span data-i18n="n06">Control Flow</span><span class="ni-n">§06</span></div>
+    <div class="ni on" onclick="navigate('s01')"><span class="ni-i">📖</span><span data-i18n="n01">Introduction</span><span class="ni-n">§01</span></div>
+    <div class="ni" onclick="navigate('s02')"><span class="ni-i">⚙️</span><span data-i18n="n02">Setup & Compilation</span><span class="ni-n">§02</span></div>
+    <div class="ni" onclick="navigate('s03')"><span class="ni-i">📐</span><span data-i18n="n03">Fundamental Types</span><span class="ni-n">§03</span></div>
+    <div class="ni" onclick="navigate('s04')"><span class="ni-i">📦</span><span data-i18n="n04">Variables & Storage</span><span class="ni-n">§04</span></div>
+    <div class="ni" onclick="navigate('s05')"><span class="ni-i">🔢</span><span data-i18n="n05">All Operators</span><span class="ni-n">§05</span></div>
+    <div class="ni" onclick="navigate('s06')"><span class="ni-i">🔀</span><span data-i18n="n06">Control Flow</span><span class="ni-n">§06</span></div>
   </div>
 </div>
 <div class="sg">
   <div class="sg-h" onclick="toggleSG(this)"><span data-i18n="g2">Core Language</span><span class="sg-arr">▾</span></div>
   <div class="sg-items">
-    <div class="ni" onclick="goTo('s07')"><span class="ni-i">⚡</span><span data-i18n="n07">Functions</span><span class="ni-n">§07</span></div>
-    <div class="ni" onclick="goTo('s08')"><span class="ni-i">🗂</span><span data-i18n="n08">Arrays & Strings</span><span class="ni-n">§08</span></div>
-    <div class="ni" onclick="goTo('s09')"><span class="ni-i">📌</span><span data-i18n="n09">Pointers & References</span><span class="ni-n">§09</span></div>
-    <div class="ni" onclick="goTo('s10')"><span class="ni-i">🧠</span><span data-i18n="n10">Dynamic Memory</span><span class="ni-n">§10</span></div>
-    <div class="ni" onclick="goTo('s11')"><span class="ni-i">🔷</span><span data-i18n="n11">Struct / Union / Enum</span><span class="ni-n">§11</span></div>
+    <div class="ni" onclick="navigate('s07')"><span class="ni-i">⚡</span><span data-i18n="n07">Functions</span><span class="ni-n">§07</span></div>
+    <div class="ni" onclick="navigate('s08')"><span class="ni-i">🗂</span><span data-i18n="n08">Arrays & Strings</span><span class="ni-n">§08</span></div>
+    <div class="ni" onclick="navigate('s09')"><span class="ni-i">📌</span><span data-i18n="n09">Pointers & References</span><span class="ni-n">§09</span></div>
+    <div class="ni" onclick="navigate('s10')"><span class="ni-i">🧠</span><span data-i18n="n10">Dynamic Memory</span><span class="ni-n">§10</span></div>
+    <div class="ni" onclick="navigate('s11')"><span class="ni-i">🔷</span><span data-i18n="n11">Struct / Union / Enum</span><span class="ni-n">§11</span></div>
   </div>
 </div>
 <div class="sg">
   <div class="sg-h" onclick="toggleSG(this)"><span data-i18n="g3">Object-Oriented</span><span class="sg-arr">▾</span></div>
   <div class="sg-items">
-    <div class="ni" onclick="goTo('s12')"><span class="ni-i">🏛</span><span data-i18n="n12">Classes & OOP</span><span class="ni-n">§12</span></div>
-    <div class="ni" onclick="goTo('s13')"><span class="ni-i">🔨</span><span data-i18n="n13">Ctors & Rule of 5</span><span class="ni-n">§13</span></div>
-    <div class="ni" onclick="goTo('s14')"><span class="ni-i">🔧</span><span data-i18n="n14">Operator Overloading</span><span class="ni-n">§14</span></div>
-    <div class="ni" onclick="goTo('s15')"><span class="ni-i">🌲</span><span data-i18n="n15">Inheritance & Poly</span><span class="ni-n">§15</span></div>
+    <div class="ni" onclick="navigate('s12')"><span class="ni-i">🏛</span><span data-i18n="n12">Classes & OOP</span><span class="ni-n">§12</span></div>
+    <div class="ni" onclick="navigate('s13')"><span class="ni-i">🔨</span><span data-i18n="n13">Ctors & Rule of 5</span><span class="ni-n">§13</span></div>
+    <div class="ni" onclick="navigate('s14')"><span class="ni-i">🔧</span><span data-i18n="n14">Operator Overloading</span><span class="ni-n">§14</span></div>
+    <div class="ni" onclick="navigate('s15')"><span class="ni-i">🌲</span><span data-i18n="n15">Inheritance & Poly</span><span class="ni-n">§15</span></div>
   </div>
 </div>
 <div class="sg">
   <div class="sg-h" onclick="toggleSG(this)"><span data-i18n="g4">Advanced</span><span class="sg-arr">▾</span></div>
   <div class="sg-items">
-    <div class="ni" onclick="goTo('s16')"><span class="ni-i">📦</span><span data-i18n="n16">Templates</span><span class="ni-n">§16</span></div>
-    <div class="ni" onclick="goTo('s17')"><span class="ni-i">🚨</span><span data-i18n="n17">Exception Handling</span><span class="ni-n">§17</span></div>
-    <div class="ni" onclick="goTo('s18')"><span class="ni-i">🔭</span><span data-i18n="n18">Namespaces & Scope</span><span class="ni-n">§18</span></div>
-    <div class="ni" onclick="goTo('s19')"><span class="ni-i">λ</span><span data-i18n="n19">Lambdas</span><span class="ni-n">§19</span></div>
-    <div class="ni" onclick="goTo('s20')"><span class="ni-i">🚀</span><span data-i18n="n20">Move Semantics</span><span class="ni-n">§20</span></div>
+    <div class="ni" onclick="navigate('s16')"><span class="ni-i">📦</span><span data-i18n="n16">Templates</span><span class="ni-n">§16</span></div>
+    <div class="ni" onclick="navigate('s17')"><span class="ni-i">🚨</span><span data-i18n="n17">Exception Handling</span><span class="ni-n">§17</span></div>
+    <div class="ni" onclick="navigate('s18')"><span class="ni-i">🔭</span><span data-i18n="n18">Namespaces & Scope</span><span class="ni-n">§18</span></div>
+    <div class="ni" onclick="navigate('s19')"><span class="ni-i">λ</span><span data-i18n="n19">Lambdas</span><span class="ni-n">§19</span></div>
+    <div class="ni" onclick="navigate('s20')"><span class="ni-i">🚀</span><span data-i18n="n20">Move Semantics</span><span class="ni-n">§20</span></div>
   </div>
 </div>
 <div class="sg">
   <div class="sg-h" onclick="toggleSG(this)"><span data-i18n="g5">Standard Library</span><span class="sg-arr">▾</span></div>
   <div class="sg-items">
-    <div class="ni" onclick="goTo('s21')"><span class="ni-i">🔒</span><span data-i18n="n21">Smart Pointers</span><span class="ni-n">§21</span></div>
-    <div class="ni" onclick="goTo('s22')"><span class="ni-i">📚</span><span data-i18n="n22">STL Containers</span><span class="ni-n">§22</span></div>
-    <div class="ni" onclick="goTo('s23')"><span class="ni-i">🔬</span><span data-i18n="n23">Algorithms</span><span class="ni-n">§23</span></div>
-    <div class="ni" onclick="goTo('s24')"><span class="ni-i">📡</span><span data-i18n="n24">I/O Streams & Files</span><span class="ni-n">§24</span></div>
-    <div class="ni" onclick="goTo('s25')"><span class="ni-i">🧵</span><span data-i18n="n25">Concurrency</span><span class="ni-n">§25</span></div>
+    <div class="ni" onclick="navigate('s21')"><span class="ni-i">🔒</span><span data-i18n="n21">Smart Pointers</span><span class="ni-n">§21</span></div>
+    <div class="ni" onclick="navigate('s22')"><span class="ni-i">📚</span><span data-i18n="n22">STL Containers</span><span class="ni-n">§22</span></div>
+    <div class="ni" onclick="navigate('s23')"><span class="ni-i">🔬</span><span data-i18n="n23">Algorithms</span><span class="ni-n">§23</span></div>
+    <div class="ni" onclick="navigate('s24')"><span class="ni-i">📡</span><span data-i18n="n24">I/O Streams & Files</span><span class="ni-n">§24</span></div>
+    <div class="ni" onclick="navigate('s25')"><span class="ni-i">🧵</span><span data-i18n="n25">Concurrency</span><span class="ni-n">§25</span></div>
   </div>
 </div>
 <div class="sg">
   <div class="sg-h" onclick="toggleSG(this)"><span data-i18n="g6">Modern C++</span><span class="sg-arr">▾</span></div>
   <div class="sg-items">
-    <div class="ni" onclick="goTo('s26')"><span class="ni-i">✨</span><span data-i18n="n26">C++11 / C++14</span><span class="ni-n">§26</span></div>
-    <div class="ni" onclick="goTo('s27')"><span class="ni-i">⚡</span><span data-i18n="n27">C++17</span><span class="ni-n">§27</span></div>
-    <div class="ni" onclick="goTo('s28')"><span class="ni-i">🔮</span><span data-i18n="n28">C++20 / C++23</span><span class="ni-n">§28</span></div>
-    <div class="ni" onclick="goTo('s29')"><span class="ni-i">📋</span><span data-i18n="n29">Preprocessor</span><span class="ni-n">§29</span></div>
-    <div class="ni" onclick="goTo('s30')"><span class="ni-i">📑</span><span data-i18n="n30">All Keywords</span><span class="ni-n">§30</span></div>
+    <div class="ni" onclick="navigate('s26')"><span class="ni-i">✨</span><span data-i18n="n26">C++11 / C++14</span><span class="ni-n">§26</span></div>
+    <div class="ni" onclick="navigate('s27')"><span class="ni-i">⚡</span><span data-i18n="n27">C++17</span><span class="ni-n">§27</span></div>
+    <div class="ni" onclick="navigate('s28')"><span class="ni-i">🔮</span><span data-i18n="n28">C++20 / C++23</span><span class="ni-n">§28</span></div>
+    <div class="ni" onclick="navigate('s29')"><span class="ni-i">📋</span><span data-i18n="n29">Preprocessor</span><span class="ni-n">§29</span></div>
+    <div class="ni" onclick="navigate('s30')"><span class="ni-i">📑</span><span data-i18n="n30">All Keywords</span><span class="ni-n">§30</span></div>
   </div>
 </div>
 <div class="sb-pad"></div>
 </nav>
 
 <main id="mn">
-<section class="hero" id="top">
+<div class="page home-page" id="page-home" data-sid="home"><div class="home-hero">
   <div class="h-tag" data-i18n="htag">// Multi-paradigm · Systems · Zero-Overhead Abstractions</div>
   <h1 class="h-tit"><span class="ac">C</span><span class="dm">++</span></h1>
-  <p class="h-sub" data-i18n="hsub">The complete professional reference — every keyword, operator, container, algorithm, and modern feature from C++98 to C++23, with interactive examples in 10 languages.</p>
+  <p class="h-sub" data-i18n="hsub">The complete professional reference — every keyword, operator, container, algorithm, and modern feature from C++98 to C++23.</p>
   <div class="h-bgs">
-    <span class="hb hb-b">C++23 Ready</span><span class="hb hb-g">Zero Overhead</span>
+    <span class="hb hb-b">C++23</span><span class="hb hb-g">Zero Overhead</span>
     <span class="hb hb-p">Multi-Paradigm</span><span class="hb hb-a">98 Keywords</span>
-    <span class="hb hb-b">TIOBE #3</span><span class="hb hb-g">10 Languages</span>
+    <span class="hb hb-b">30 Sections</span><span class="hb hb-g">11 Languages</span>
     <span class="hb hb-p">2 Themes</span>
   </div>
-  <div id="hterm"></div>
-  <div class="h-stats">
-    <div class="hs"><span class="hs-v">1983</span><span class="hs-l">Year Created</span></div>
-    <div class="hs"><span class="hs-v">C++23</span><span class="hs-l">Latest Standard</span></div>
-    <div class="hs"><span class="hs-v">98</span><span class="hs-l">Keywords</span></div>
-    <div class="hs"><span class="hs-v">#3</span><span class="hs-l">TIOBE 2024</span></div>
-    <div class="hs"><span class="hs-v">10</span><span class="hs-l">UI Languages</span></div>
+  <div class="home-search">
+    <span class="home-search-ic">⌕</span>
+    <input type="text" id="home-si" placeholder="Search section, keyword, topic..." oninput="doSearch(this.value)" autocomplete="off">
   </div>
-</section>
-
-<!-- §01 INTRO -->
-<section class="sec alt" id="s01">
+  <div class="home-stats">
+    <div class="hstat"><span class="hstat-v">1983</span><span class="hstat-l">Year Created</span></div>
+    <div class="hstat"><span class="hstat-v">C++23</span><span class="hstat-l">Latest Standard</span></div>
+    <div class="hstat"><span class="hstat-v">30</span><span class="hstat-l">Sections</span></div>
+    <div class="hstat"><span class="hstat-v">11</span><span class="hstat-l">Languages</span></div>
+  </div>
+</div>
+<div class="home-body">
+<div class="cat-section">
+  <div class="cat-hdr">
+    <div class="cat-line"></div>
+    <span class="cat-label" style="color:#d79921">Foundations</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="sec-cards">
+    <div class="sec-card" onclick="navigate('s01')" style="--card-accent:#d79921" title="Introduction & Philosophy">
+      <div class="sc-top">
+        <span class="sc-num">§01</span>
+        <span class="tag tacc" style="font-size:9px">Foundations</span>
+        <span class="sc-icon">📖</span>
+      </div>
+      <div class="sc-title">Introduction & Philosophy</div>
+      <div class="sc-desc">History, philosophy, zero-overhead abstractions, C++ vs other languages.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s02')" style="--card-accent:#d79921" title="Setup & Compilation">
+      <div class="sc-top">
+        <span class="sc-num">§02</span>
+        <span class="tag tacc" style="font-size:9px">Foundations</span>
+        <span class="sc-icon">⚙️</span>
+      </div>
+      <div class="sc-title">Setup & Compilation</div>
+      <div class="sc-desc">Compiler pipeline, CMake, flags, ODR, header vs source files.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s03')" style="--card-accent:#d79921" title="Fundamental Types">
+      <div class="sc-top">
+        <span class="sc-num">§03</span>
+        <span class="tag tacc" style="font-size:9px">Foundations</span>
+        <span class="sc-icon">📐</span>
+      </div>
+      <div class="sc-title">Fundamental Types</div>
+      <div class="sc-desc">int, double, char, bool, auto, fixed-width, literals, qualifiers.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s04')" style="--card-accent:#d79921" title="Variables & Storage">
+      <div class="sc-top">
+        <span class="sc-num">§04</span>
+        <span class="tag tacc" style="font-size:9px">Foundations</span>
+        <span class="sc-icon">📦</span>
+      </div>
+      <div class="sc-title">Variables & Storage</div>
+      <div class="sc-desc">Initialization, const, constexpr, scope, linkage, type aliases.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s05')" style="--card-accent:#d79921" title="All Operators">
+      <div class="sc-top">
+        <span class="sc-num">§05</span>
+        <span class="tag tacc" style="font-size:9px">Foundations</span>
+        <span class="sc-icon">🔢</span>
+      </div>
+      <div class="sc-title">All Operators</div>
+      <div class="sc-desc">Every operator with precedence table & live expression calculator.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s06')" style="--card-accent:#d79921" title="Control Flow">
+      <div class="sc-top">
+        <span class="sc-num">§06</span>
+        <span class="tag tacc" style="font-size:9px">Foundations</span>
+        <span class="sc-icon">🔀</span>
+      </div>
+      <div class="sc-title">Control Flow</div>
+      <div class="sc-desc">if/else, switch, for, range-for, while, break, continue, goto.</div>
+    </div>
+  </div>
+</div>
+<div class="cat-section">
+  <div class="cat-hdr">
+    <div class="cat-line"></div>
+    <span class="cat-label" style="color:#fe8019">Core Language</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="sec-cards">
+    <div class="sec-card" onclick="navigate('s07')" style="--card-accent:#fe8019" title="Functions">
+      <div class="sc-top">
+        <span class="sc-num">§07</span>
+        <span class="tag tamb" style="font-size:9px">Core Language</span>
+        <span class="sc-icon">⚡</span>
+      </div>
+      <div class="sc-title">Functions</div>
+      <div class="sc-desc">Overloading, defaults, inline, constexpr, variadic, pass modes.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s08')" style="--card-accent:#fe8019" title="Arrays & Strings">
+      <div class="sc-top">
+        <span class="sc-num">§08</span>
+        <span class="tag tamb" style="font-size:9px">Core Language</span>
+        <span class="sc-icon">🗂</span>
+      </div>
+      <div class="sc-title">Arrays & Strings</div>
+      <div class="sc-desc">C-arrays, std::array, std::vector, std::string, string_view.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s09')" style="--card-accent:#fe8019" title="Pointers & References">
+      <div class="sc-top">
+        <span class="sc-num">§09</span>
+        <span class="tag tamb" style="font-size:9px">Core Language</span>
+        <span class="sc-icon">📌</span>
+      </div>
+      <div class="sc-title">Pointers & References</div>
+      <div class="sc-desc">Pointer arithmetic, nullptr, const-ptr, references vs pointers.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s10')" style="--card-accent:#fe8019" title="Dynamic Memory">
+      <div class="sc-top">
+        <span class="sc-num">§10</span>
+        <span class="tag tamb" style="font-size:9px">Core Language</span>
+        <span class="sc-icon">🧠</span>
+      </div>
+      <div class="sc-title">Dynamic Memory</div>
+      <div class="sc-desc">new/delete, RAII, stack vs heap, memory layout, sanitizers.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s11')" style="--card-accent:#fe8019" title="Struct / Union / Enum">
+      <div class="sc-top">
+        <span class="sc-num">§11</span>
+        <span class="tag tamb" style="font-size:9px">Core Language</span>
+        <span class="sc-icon">🔷</span>
+      </div>
+      <div class="sc-title">Struct / Union / Enum</div>
+      <div class="sc-desc">Structs, bit-fields, unions, std::variant, scoped enumerations.</div>
+    </div>
+  </div>
+</div>
+<div class="cat-section">
+  <div class="cat-hdr">
+    <div class="cat-line"></div>
+    <span class="cat-label" style="color:#d3869b">Object-Oriented</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="sec-cards">
+    <div class="sec-card" onclick="navigate('s12')" style="--card-accent:#d3869b" title="Classes & OOP">
+      <div class="sc-top">
+        <span class="sc-num">§12</span>
+        <span class="tag tpur" style="font-size:9px">Object-Oriented</span>
+        <span class="sc-icon">🏛</span>
+      </div>
+      <div class="sc-title">Classes & OOP</div>
+      <div class="sc-desc">Encapsulation, access, this, static, friend, operator<<.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s13')" style="--card-accent:#d3869b" title="Ctors & Rule of Five">
+      <div class="sc-top">
+        <span class="sc-num">§13</span>
+        <span class="tag tpur" style="font-size:9px">Object-Oriented</span>
+        <span class="sc-icon">🔨</span>
+      </div>
+      <div class="sc-title">Ctors & Rule of Five</div>
+      <div class="sc-desc">All 6 special members, copy/move, delegating, inheriting ctors.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s14')" style="--card-accent:#d3869b" title="Operator Overloading">
+      <div class="sc-top">
+        <span class="sc-num">§14</span>
+        <span class="tag tpur" style="font-size:9px">Object-Oriented</span>
+        <span class="sc-icon">🔧</span>
+      </div>
+      <div class="sc-title">Operator Overloading</div>
+      <div class="sc-desc">Arithmetic, comparison, stream, subscript, spaceship, conversion.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s15')" style="--card-accent:#d3869b" title="Inheritance & Polymorphism">
+      <div class="sc-top">
+        <span class="sc-num">§15</span>
+        <span class="tag tpur" style="font-size:9px">Object-Oriented</span>
+        <span class="sc-icon">🌲</span>
+      </div>
+      <div class="sc-title">Inheritance & Polymorphism</div>
+      <div class="sc-desc">Virtual functions, vtable, abstract, override, final, dynamic_cast.</div>
+    </div>
+  </div>
+</div>
+<div class="cat-section">
+  <div class="cat-hdr">
+    <div class="cat-line"></div>
+    <span class="cat-label" style="color:#83a598">Advanced</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="sec-cards">
+    <div class="sec-card" onclick="navigate('s16')" style="--card-accent:#83a598" title="Templates">
+      <div class="sc-top">
+        <span class="sc-num">§16</span>
+        <span class="tag tcyn" style="font-size:9px">Advanced</span>
+        <span class="sc-icon">📦</span>
+      </div>
+      <div class="sc-title">Templates</div>
+      <div class="sc-desc">Function, class, variadic, fold, specialisation, concepts, SFINAE.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s17')" style="--card-accent:#83a598" title="Exception Handling">
+      <div class="sc-top">
+        <span class="sc-num">§17</span>
+        <span class="tag tcyn" style="font-size:9px">Advanced</span>
+        <span class="sc-icon">🚨</span>
+      </div>
+      <div class="sc-title">Exception Handling</div>
+      <div class="sc-desc">try/catch/throw, exception hierarchy, noexcept, stack unwinding.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s18')" style="--card-accent:#83a598" title="Namespaces & Scope">
+      <div class="sc-top">
+        <span class="sc-num">§18</span>
+        <span class="tag tcyn" style="font-size:9px">Advanced</span>
+        <span class="sc-icon">🔭</span>
+      </div>
+      <div class="sc-title">Namespaces & Scope</div>
+      <div class="sc-desc">namespace, using, anonymous, inline, ADL, key std headers.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s19')" style="--card-accent:#83a598" title="Lambdas">
+      <div class="sc-top">
+        <span class="sc-num">§19</span>
+        <span class="tag tcyn" style="font-size:9px">Advanced</span>
+        <span class="sc-icon">λ</span>
+      </div>
+      <div class="sc-title">Lambdas</div>
+      <div class="sc-desc">Capture modes, mutable, generic, init-capture, std::function.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s20')" style="--card-accent:#83a598" title="Move Semantics">
+      <div class="sc-top">
+        <span class="sc-num">§20</span>
+        <span class="tag tcyn" style="font-size:9px">Advanced</span>
+        <span class="sc-icon">🚀</span>
+      </div>
+      <div class="sc-title">Move Semantics</div>
+      <div class="sc-desc">lvalue/rvalue/xvalue, std::move, std::forward, perfect forwarding.</div>
+    </div>
+  </div>
+</div>
+<div class="cat-section">
+  <div class="cat-hdr">
+    <div class="cat-line"></div>
+    <span class="cat-label" style="color:#8ec07c">Standard Library</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="sec-cards">
+    <div class="sec-card" onclick="navigate('s21')" style="--card-accent:#8ec07c" title="Smart Pointers">
+      <div class="sc-top">
+        <span class="sc-num">§21</span>
+        <span class="tag tgrn" style="font-size:9px">Standard Library</span>
+        <span class="sc-icon">🔒</span>
+      </div>
+      <div class="sc-title">Smart Pointers</div>
+      <div class="sc-desc">unique_ptr, shared_ptr, weak_ptr, make_unique, custom deleters.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s22')" style="--card-accent:#8ec07c" title="STL Containers">
+      <div class="sc-top">
+        <span class="sc-num">§22</span>
+        <span class="tag tgrn" style="font-size:9px">Standard Library</span>
+        <span class="sc-icon">📚</span>
+      </div>
+      <div class="sc-title">STL Containers</div>
+      <div class="sc-desc">vector, map, unordered_map, set, deque, list, stack, queue.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s23')" style="--card-accent:#8ec07c" title="Algorithms">
+      <div class="sc-top">
+        <span class="sc-num">§23</span>
+        <span class="tag tgrn" style="font-size:9px">Standard Library</span>
+        <span class="sc-icon">🔬</span>
+      </div>
+      <div class="sc-title">Algorithms</div>
+      <div class="sc-desc">sort, find, transform, accumulate, ranges, parallel policies.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s24')" style="--card-accent:#8ec07c" title="I/O Streams & Files">
+      <div class="sc-top">
+        <span class="sc-num">§24</span>
+        <span class="tag tgrn" style="font-size:9px">Standard Library</span>
+        <span class="sc-icon">📡</span>
+      </div>
+      <div class="sc-title">I/O Streams & Files</div>
+      <div class="sc-desc">cout/cin, fstream, stringstream, std::format, std::print.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s25')" style="--card-accent:#8ec07c" title="Concurrency">
+      <div class="sc-top">
+        <span class="sc-num">§25</span>
+        <span class="tag tgrn" style="font-size:9px">Standard Library</span>
+        <span class="sc-icon">🧵</span>
+      </div>
+      <div class="sc-title">Concurrency</div>
+      <div class="sc-desc">thread, mutex, atomic, future, async, jthread, semaphore.</div>
+    </div>
+  </div>
+</div>
+<div class="cat-section">
+  <div class="cat-hdr">
+    <div class="cat-line"></div>
+    <span class="cat-label" style="color:#fb4934">Modern C++</span>
+    <div class="cat-line"></div>
+  </div>
+  <div class="sec-cards">
+    <div class="sec-card" onclick="navigate('s26')" style="--card-accent:#fb4934" title="C++11 & C++14">
+      <div class="sc-top">
+        <span class="sc-num">§26</span>
+        <span class="tag tred" style="font-size:9px">Modern C++</span>
+        <span class="sc-icon">✨</span>
+      </div>
+      <div class="sc-title">C++11 & C++14</div>
+      <div class="sc-desc">auto, nullptr, lambda, move semantics, constexpr, make_unique.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s27')" style="--card-accent:#fb4934" title="C++17">
+      <div class="sc-top">
+        <span class="sc-num">§27</span>
+        <span class="tag tred" style="font-size:9px">Modern C++</span>
+        <span class="sc-icon">⚡</span>
+      </div>
+      <div class="sc-title">C++17</div>
+      <div class="sc-desc">Structured bindings, if constexpr, optional, variant, filesystem.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s28')" style="--card-accent:#fb4934" title="C++20 & C++23">
+      <div class="sc-top">
+        <span class="sc-num">§28</span>
+        <span class="tag tred" style="font-size:9px">Modern C++</span>
+        <span class="sc-icon">🔮</span>
+      </div>
+      <div class="sc-title">C++20 & C++23</div>
+      <div class="sc-desc">Concepts, ranges, coroutines, modules, std::format, std::print.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s29')" style="--card-accent:#fb4934" title="Preprocessor">
+      <div class="sc-top">
+        <span class="sc-num">§29</span>
+        <span class="tag tred" style="font-size:9px">Modern C++</span>
+        <span class="sc-icon">📋</span>
+      </div>
+      <div class="sc-title">Preprocessor</div>
+      <div class="sc-desc">#include, #define, #ifdef, #pragma, variadic macros, predefined.</div>
+    </div>
+    <div class="sec-card" onclick="navigate('s30')" style="--card-accent:#fb4934" title="All Keywords">
+      <div class="sc-top">
+        <span class="sc-num">§30</span>
+        <span class="tag tred" style="font-size:9px">Modern C++</span>
+        <span class="sc-icon">📑</span>
+      </div>
+      <div class="sc-title">All Keywords</div>
+      <div class="sc-desc">All 98 C++ keywords — categorised, color-coded, searchable.</div>
+    </div>
+  </div>
+</div></div></section></div><!-- /page-home -->
+<div class="page sec-page" id="page-s01" data-sid="s01">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§01</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Introduction & Philosophy</span>
+  <span class="bc-progress">1 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 01</span><span class="tag ta">Foundation</span></div>
 <h2 class="sec-tit" data-i18n="t01">Introduction & Philosophy</h2>
 <p class="sec-desc" data-i18n="d01">C++ was designed by Bjarne Stroustrup beginning in 1979 as "C with Classes". Its core principle: <strong>zero-overhead abstractions</strong> — you only pay for what you use. It uniquely combines systems-level hardware control with high-level OOP, generics, and functional programming.</p></div>
@@ -646,10 +1429,27 @@ pre code.hljs{word-break:normal;overflow-wrap:normal;white-space:pre}
 </div></div>
 <div class="co n"><strong>Where C++ is Used:</strong> Operating systems (Windows, Linux kernel modules), browsers (Chrome V8, Firefox SpiderMonkey), game engines (Unreal, id Tech), databases (MySQL, MongoDB, Redis), compilers (LLVM/Clang), embedded systems, finance (HFT), robotics, machine learning backends (TensorFlow, PyTorch core).</div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <div></div>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s02')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Setup & Compilation</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §02 SETUP & COMPILATION -->
-<section class="sec nor" id="s02">
+<div class="page sec-page" id="page-s02" data-sid="s02">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§02</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Setup & Compilation</span>
+  <span class="bc-progress">2 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 02</span><span class="tag ta">Foundation</span></div>
 <h2 class="sec-tit" data-i18n="t02">Setup & Compilation Pipeline</h2>
 <p class="sec-desc" data-i18n="d02">C++ source is compiled to native machine code in four phases. Understanding this pipeline is essential for debugging link errors, managing build times, and using advanced optimizations. The compiler also enforces the <strong>One Definition Rule (ODR)</strong>.</p></div>
@@ -683,8 +1483,9 @@ pre code.hljs{word-break:normal;overflow-wrap:normal;white-space:pre}
 <div>
 <div class="cw mb4"><div class="ct"><div class="cdts"><span class="cdt cdt-r"></span><span class="cdt cdt-y"></span><span class="cdt cdt-g"></span></div><span class="cf">build.sh</span><button class="cpb" onclick="copyCode(this)">Copy</button></div>
 <pre><code class="language-cpp">// ── SINGLE FILE ─────────────────────────────────
-g++ -std=c++23 -Wall -Wextra -O2 main.cpp -o app
-clang++ -std=c++23 -Wall -O2 main.cpp -o app
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o app      # C++20 baseline
+clang++ -std=c++20 -Wall -O2 main.cpp -o app
+g++ -std=c++23 -Wall -O2 main.cpp -o app                  # C++23 for std::print
 
 // ── DEBUG BUILD (sanitizers) ─────────────────────
 g++ -std=c++23 -g3 -O0 -fsanitize=address,undefined \
@@ -702,7 +1503,8 @@ g++ math.o render.o -o app   # link step
 // ── CMakeLists.txt (recommended build system) ────
 cmake_minimum_required(VERSION 3.25)
 project(MyProject CXX)
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_EXTENSIONS OFF)   # enforce ISO C++20 only
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(app main.cpp util.cpp)
@@ -734,10 +1536,30 @@ target_compile_definitions(app PRIVATE $&lt;$&lt;CONFIG:Release&gt;:NDEBUG&gt;)
 <tr><td>enum class, typedef, using</td><td class="c2">Expensive #include chains</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s01')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Introduction & Philosophy</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s03')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Fundamental Types</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §03 TYPES -->
-<section class="sec alt" id="s03">
+<div class="page sec-page" id="page-s03" data-sid="s03">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§03</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Fundamental Types</span>
+  <span class="bc-progress">3 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 03</span><span class="tag ta">Core</span><span class="tag tp">Types</span></div>
 <h2 class="sec-tit" data-i18n="t03">Fundamental Types & Literals</h2>
 <p class="sec-desc" data-i18n="d03">Every C++ variable has a compile-time type. The type determines memory size, alignment, value range, and valid operations. Fixed-width types (<code>&lt;cstdint&gt;</code>) guarantee exact sizes across all platforms. Always prefer <code>int64_t</code> over <code>long long</code> in portable code.</p></div>
@@ -779,7 +1601,7 @@ target_compile_definitions(app PRIVATE $&lt;$&lt;CONFIG:Release&gt;:NDEBUG&gt;)
 <tr class="cat"><td colspan="4">Special / Utility Types</td></tr>
 <tr><td>void</td><td>—</td><td class="c2">Incomplete type; used for functions returning nothing; void* is untyped ptr</td><td class="mono">—</td></tr>
 <tr><td>nullptr_t</td><td>ptr-size</td><td class="c2">Type of nullptr (C++11); type-safe null pointer</td><td class="mono">nullptr</td></tr>
-<tr><td>std::byte</td><td>1B</td><td class="c2">Raw byte (C++17); not arithmetic — no accidental math</td><td class="mono">—</td></tr>
+<tr><td>std::byte</td><td>1B</td><td class="c2">Raw byte (C++17); not arithmetic — no accidental math. Use for buffers.</td><td class="mono">—</td></tr>
 <tr><td>auto</td><td>deduced</td><td class="c2">Compiler deduces type from initializer (C++11)</td><td class="mono">—</td></tr>
 <tr><td>decltype(expr)</td><td>deduced</td><td class="c2">Yields the type of expr without evaluating it (C++11)</td><td class="mono">—</td></tr>
 </tbody></table></div>
@@ -851,10 +1673,30 @@ int* p = nullptr;   // type: std::nullptr_t
 <tr><td>short / long</td><td class="c2">Modifies integer or floating-point width.</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s02')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Setup & Compilation</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s04')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Variables & Storage</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §04 VARIABLES -->
-<section class="sec nor" id="s04">
+<div class="page sec-page" id="page-s04" data-sid="s04">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§04</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Variables & Storage</span>
+  <span class="bc-progress">4 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 04</span><span class="tag ta">Core</span></div>
 <h2 class="sec-tit" data-i18n="t04">Variables, Storage & Scope</h2>
 <p class="sec-desc" data-i18n="d04">Every variable has a type, value, storage duration, and linkage. Prefer brace-initialization <code>{}</code> — it prevents <em>narrowing conversions</em>. Use <code>const</code> and <code>constexpr</code> aggressively to communicate immutability and enable compiler optimizations.</p></div>
@@ -944,10 +1786,30 @@ template&lt;typename T&gt; using Ptr = T*;      // alias template</code></pre>
 <div class="ob" style="padding:0;min-height:0"><pre style="margin:0"><code class="language-cpp" id="vcode"></code></pre></div>
 </div></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s03')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Fundamental Types</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s05')">
+      <span><span class="snb-label">Next</span><span class="snb-title">All Operators</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §05 OPERATORS -->
-<section class="sec alt" id="s05">
+<div class="page sec-page" id="page-s05" data-sid="s05">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§05</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">All Operators</span>
+  <span class="bc-progress">5 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 05</span><span class="tag ta">Core</span><span class="tag tb2">Reference</span></div>
 <h2 class="sec-tit" data-i18n="t05">All Operators & Precedence</h2>
 <p class="sec-desc" data-i18n="d05">C++ has one of the richest operator sets of any language. Operator precedence determines evaluation order. Associativity resolves ties at the same level. When in doubt, use parentheses. C++20 adds the three-way comparison <code>&lt;=&gt;</code> (spaceship operator).</p></div>
@@ -1025,10 +1887,30 @@ template&lt;typename T&gt; using Ptr = T*;      // alias template</code></pre>
 <div class="ob" style="padding:0;min-height:0"><pre style="margin:0"><code class="language-cpp" id="ocode"></code></pre></div>
 </div></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s04')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Variables & Storage</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s06')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Control Flow</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §06 CONTROL FLOW -->
-<section class="sec nor" id="s06">
+<div class="page sec-page" id="page-s06" data-sid="s06">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§06</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Control Flow</span>
+  <span class="bc-progress">6 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 06</span><span class="tag ta">Core</span></div>
 <h2 class="sec-tit" data-i18n="t06">Control Flow</h2>
 <p class="sec-desc" data-i18n="d06">C++ provides every control-flow construct you need: conditionals, all three loop forms, and the range-based <code>for</code> (C++11) that works on any container. C++17 adds initializer statements to <code>if</code> and <code>switch</code>. Prefer <code>break</code>/<code>continue</code> over <code>goto</code>.</p></div>
@@ -1138,10 +2020,30 @@ retry:
 <tr><td>goto</td><td class="c2">Avoid. Use only for forward jumps in C libraries.</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s05')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">All Operators</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s07')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Functions</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §07 FUNCTIONS -->
-<section class="sec alt" id="s07">
+<div class="page sec-page" id="page-s07" data-sid="s07">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§07</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Functions</span>
+  <span class="bc-progress">7 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 07</span><span class="tag ta">Core</span></div>
 <h2 class="sec-tit" data-i18n="t07">Functions</h2>
 <p class="sec-desc" data-i18n="d07">Functions are the fundamental unit of code organization. C++ supports overloading, default arguments, <code>inline</code>, <code>constexpr</code>, <code>consteval</code>, trailing return types, and variadic templates. Always prefer <code>const&amp;</code> for read-only parameters of non-trivial types to avoid costly copies.</p></div>
@@ -1192,8 +2094,9 @@ constexpr int factorial(int n) {
 constexpr int f5 = factorial(5);  // computed at compile time: 120
 
 // ── CONSTEVAL (C++20, must be compile-time) ───
-consteval int compileSquare(int x) { return x * x; }
-int r = compileSquare(7); // 49, guaranteed CT
+consteval int compileSquare(int x) { return x * x; }   // C++20
+static_assert(compileSquare(7) == 49);    // compile-time verification
+// compileSquare(getVal());               // ERROR: arg not constant
 
 // ── NOEXCEPT (C++11) ─────────────────────────
 int safeDiv(int a, int b) noexcept { return a / b; }
@@ -1206,7 +2109,10 @@ class NoCopy {
 };
 class Widget {
     Widget() = default;                  // compiler generates default ctor
+    // C++20: parenthesized aggregate init
 };
+Widget w1{};                           // list-init (since C++11)
+Widget w2();                           // C++20: same as above for aggregates
 
 // ── VARIADIC TEMPLATES (C++11) ────────────────
 template&lt;typename... Args&gt;
@@ -1251,10 +2157,30 @@ FuncPtr fp2 = add;</code></pre>
 <tr><td>By value (sink)</td><td class="mono">T x</td><td class="c2">When you store the param anyway — let caller choose copy/move</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s06')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Control Flow</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s08')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Arrays & Strings</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §08 ARRAYS & STRINGS -->
-<section class="sec nor" id="s08">
+<div class="page sec-page" id="page-s08" data-sid="s08">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§08</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Arrays & Strings</span>
+  <span class="bc-progress">8 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 08</span><span class="tag ta">Core</span></div>
 <h2 class="sec-tit" data-i18n="t08">Arrays, Strings & string_view</h2>
 <p class="sec-desc" data-i18n="d08">Arrays store contiguous elements of the same type. C-style arrays decay to pointers — prefer <code>std::array</code> (fixed) or <code>std::vector</code> (dynamic). For text, use <code>std::string</code>; for read-only views over existing strings, use <code>std::string_view</code> (C++17) — it avoids heap allocation entirely.</p></div>
@@ -1291,8 +2217,16 @@ std::sort(a.begin(), a.end());
 // ── std::vector (dynamic array) ───────────────
 #include &lt;vector&gt;
 std::vector&lt;int&gt; v;
-v.push_back(10);       // append
-v.emplace_back(20);    // construct in-place (C++11, faster)
+v.push_back(10);          // append
+v.emplace_back(20);       // construct in-place — avoids copy
+v.emplace_back(30);
+
+// std::span (C++20) — non-owning view over contiguous data
+#include &lt;span&gt;
+void process(std::span&lt;int&gt; data) { // accepts vector, array, raw array
+    for (int x : data) std::cout &lt;&lt; x;
+}
+process(v);                          // no need to pass size separately
 v.push_back(30);
 v[1] = 99;             // access (no bounds check)
 v.at(1);               // bounds-checked access
@@ -1395,10 +2329,30 @@ sv.ends_with("!");       // true (C++20)
 </tbody></table></div>
 <div class="co n"><strong>Performance tip (from LearnCpp):</strong> Prefer <code>std::string_view</code> over <code>const std::string&amp;</code> for read-only string parameters — it avoids heap allocation when called with string literals or substrings.</div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s07')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Functions</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s09')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Pointers & References</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §09 POINTERS & REFERENCES -->
-<section class="sec alt" id="s09">
+<div class="page sec-page" id="page-s09" data-sid="s09">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§09</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Pointers & References</span>
+  <span class="bc-progress">9 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 09</span><span class="tag ta">Core</span><span class="tag tr2">Memory</span></div>
 <h2 class="sec-tit" data-i18n="t09">Pointers & References</h2>
 <p class="sec-desc" data-i18n="d09">Pointers hold memory addresses; they can be null, reassigned, and support arithmetic. References are aliases — always valid, never null, cannot be reseated. Understanding pointer arithmetic is essential for low-level systems work, iterator internals, and hardware-interfacing code (e.g. x86_64 register mapping).</p></div>
@@ -1491,10 +2445,30 @@ const int&amp; cr = 42;  // const ref can bind to rvalue/literal
 <tr><td>Use when</td><td class="c2">Optional, nullable, arithmetic needed</td><td class="c2">Aliasing, params, returns</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s08')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Arrays & Strings</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s10')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Dynamic Memory</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §10 DYNAMIC MEMORY -->
-<section class="sec nor" id="s10">
+<div class="page sec-page" id="page-s10" data-sid="s10">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§10</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Dynamic Memory</span>
+  <span class="bc-progress">10 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 10</span><span class="tag ta">Core</span><span class="tag tr2">Memory</span></div>
 <h2 class="sec-tit" data-i18n="t10">Dynamic Memory & RAII</h2>
 <p class="sec-desc" data-i18n="d10">The heap allows allocations of arbitrary size at runtime via <code>new</code>/<code>delete</code>. Manual memory management is error-prone — prefer <strong>RAII</strong> (Resource Acquisition Is Initialization) and smart pointers. Every <code>new</code> must match a <code>delete</code>; every <code>new[]</code> a <code>delete[]</code>.</p></div>
@@ -1582,10 +2556,30 @@ public:
 <tr><td>Smart (shared)</td><td class="mono">make_shared&lt;T&gt;(args)</td><td class="mono">ref-counted auto</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s09')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Pointers & References</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s11')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Struct / Union / Enum</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §11 STRUCT / UNION / ENUM -->
-<section class="sec alt" id="s11">
+<div class="page sec-page" id="page-s11" data-sid="s11">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§11</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Struct / Union / Enum</span>
+  <span class="bc-progress">11 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 11</span><span class="tag ta">Core</span><span class="tag tp">Types</span></div>
 <h2 class="sec-tit" data-i18n="t11">Struct, Union & Enum</h2>
 <p class="sec-desc" data-i18n="d11"><code>struct</code> groups related data (all members public by default). <code>union</code> overlaps members at the same address — use <code>std::variant</code> instead. <code>enum class</code> (C++11) gives type-safe named constants without implicit integer conversion.</p></div>
@@ -1603,8 +2597,10 @@ Point p{3.0, 4.0};
 p.dist();                  // 5.0
 Point p2 = {1.0, 2.0};    // aggregate init
 
-// C++20 designated initializers
-Point p3 = {.x = 5.0, .y = 0.0};
+// C++20 designated initializers — readable, order must match declaration
+Point p3 = {.x = 5.0, .y = 0.0};   // only specify what you need
+Point p4 = {.x = 1.0};              // .y defaults to 0.0
+// Point bad = {.y=1,.x=2};         // ERROR: wrong order
 
 // Bit fields (compact storage)
 struct Flags {
@@ -1684,10 +2680,30 @@ switch (d) {
 <tr><td>Use for</td><td class="c2">Plain data (POD)</td><td class="c2">Encapsulated types</td><td class="c2">Use std::variant instead</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s10')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Dynamic Memory</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s12')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Classes & OOP</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §12 CLASSES & OOP -->
-<section class="sec nor" id="s12">
+<div class="page sec-page" id="page-s12" data-sid="s12">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§12</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Classes & OOP</span>
+  <span class="bc-progress">12 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 12</span><span class="tag tp">OOP</span></div>
 <h2 class="sec-tit" data-i18n="t12">Classes & Object-Oriented Programming</h2>
 <p class="sec-desc" data-i18n="d12">A class bundles data (members) with behavior (methods). <strong>Encapsulation</strong> restricts direct access to internal state through access specifiers. The hidden <code>this</code> pointer refers to the current object. <code>static</code> members belong to the class, not to any instance.</p></div>
@@ -1776,10 +2792,30 @@ int Counter::count_ = 0;
 Counter a, b, c;
 Counter::count();    // 3 (not on an instance!)</code></pre></div></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s11')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Struct / Union / Enum</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s13')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Ctors & Rule of Five</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §13 CONSTRUCTORS & RULE OF 5 -->
-<section class="sec alt" id="s13">
+<div class="page sec-page" id="page-s13" data-sid="s13">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§13</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Ctors & Rule of Five</span>
+  <span class="bc-progress">13 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 13</span><span class="tag tp">OOP</span><span class="tag tr2">Memory</span></div>
 <h2 class="sec-tit" data-i18n="t13">Constructors, Destructors & Rule of Five</h2>
 <p class="sec-desc" data-i18n="d13">The compiler auto-generates six special member functions. The <strong>Rule of Five</strong>: if you define any of destructor, copy constructor, copy assignment, move constructor, or move assignment — you must define all five (or explicitly default/delete them). The <strong>Rule of Zero</strong>: use RAII wrappers so you don't need to write any of them.</p></div>
@@ -1893,10 +2929,30 @@ public:
     {}
 };</code></pre></div></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s12')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Classes & OOP</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s14')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Operator Overloading</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §14 OPERATOR OVERLOADING -->
-<section class="sec nor" id="s14">
+<div class="page sec-page" id="page-s14" data-sid="s14">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§14</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Operator Overloading</span>
+  <span class="bc-progress">14 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 14</span><span class="tag tp">OOP</span></div>
 <h2 class="sec-tit" data-i18n="t14">Operator Overloading</h2>
 <p class="sec-desc" data-i18n="d14">Overload operators to give user-defined types natural syntax. C++20's defaulted <code>&lt;=&gt;</code> operator generates all six comparison operators automatically. Non-member overloads (especially for symmetric binary ops) enable more flexible usage.</p></div>
@@ -1919,7 +2975,8 @@ public:
     Vec2&amp; operator-=(const Vec2&amp; o){ x-=o.x; y-=o.y; return *this; }
 
     // Comparison (C++20: one &lt;=&gt; gives all 6)
-    auto operator&lt;=&gt;(const Vec2&amp;) const = default;
+    auto operator&lt;=&gt;(const Vec2&amp;) const = default; // C++20: generates all 6 comparisons
+bool operator==(const Vec2&amp;)  const = default; // C++20: = default uses memberwise
     bool operator==(const Vec2&amp;)  const = default;
 
     // Subscript
@@ -1974,10 +3031,30 @@ a &lt; b;                    // from &lt;=&gt;</code></pre>
 </tbody></table></div>
 <div class="co w"><strong>Cannot overload:</strong> <code>::</code> (scope), <code>.</code> (member), <code>.*</code> (ptr-to-member), <code>?:</code> (ternary), <code>sizeof</code>, <code>alignof</code>, <code>typeid</code>, <code>#</code></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s13')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Ctors & Rule of Five</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s15')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Inheritance & Polymorphism</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §15 INHERITANCE & POLYMORPHISM -->
-<section class="sec alt" id="s15">
+<div class="page sec-page" id="page-s15" data-sid="s15">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§15</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Inheritance & Polymorphism</span>
+  <span class="bc-progress">15 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 15</span><span class="tag tp">OOP</span></div>
 <h2 class="sec-tit" data-i18n="t15">Inheritance & Polymorphism</h2>
 <p class="sec-desc" data-i18n="d15">Inheritance enables "is-a" relationships. <code>virtual</code> functions enable runtime dispatch through a <strong>vtable</strong> (virtual function table) — the compiler inserts a hidden vptr into each polymorphic object. Always declare base destructors <code>virtual</code>. Use <code>override</code> to catch typos. Mark leaf classes <code>final</code>.</p></div>
@@ -1991,7 +3068,7 @@ public:
     virtual double perim() const = 0;
     virtual std::string name() const = 0;
     virtual void draw()    const { std::cout &lt;&lt; "Drawing " &lt;&lt; name(); }
-    virtual ~Shape() = default;    // MUST be virtual!
+    virtual ~Shape() = default;    // MUST be virtual! C++20: = default OK here
 };
 // Shape s; ← compile error: abstract class
 
@@ -2049,7 +3126,12 @@ class B : virtual public A {};
 class C : virtual public A {};
 class D : public B, public C {};
 D d;
-d.x;  // OK (without virtual, ambiguous)</code></pre>
+d.x;  // OK (without virtual, ambiguous)
+
+// C++20: Concepts constrain template + virtual combinations
+template&lt;typename T&gt;
+concept Drawable = requires(T t) { t.draw(); };
+static_assert(Drawable&lt;Circle&gt;); // compile-time check</code></pre>
 </div>
 </div>
 <div>
@@ -2077,10 +3159,30 @@ d.x;  // OK (without virtual, ambiguous)</code></pre>
 <tr><td>private</td><td class="mono" style="color:var(--red)">hidden</td><td class="mono" style="color:var(--red)">hidden</td><td class="mono" style="color:var(--red)">hidden</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s14')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Operator Overloading</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s16')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Templates</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §16 TEMPLATES -->
-<section class="sec nor" id="s16">
+<div class="page sec-page" id="page-s16" data-sid="s16">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§16</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Templates</span>
+  <span class="bc-progress">16 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 16</span><span class="tag ta">Advanced</span><span class="tag tp">Generic</span></div>
 <h2 class="sec-tit" data-i18n="t16">Templates & Generic Programming</h2>
 <p class="sec-desc" data-i18n="d16">Templates generate type-specific code at compile time — truly zero runtime overhead. They are the foundation of the entire STL. C++20 <em>Concepts</em> replace obscure SFINAE patterns with readable, expressive constraints. Variadic templates (C++11) accept any number of type parameters.</p></div>
@@ -2192,10 +3294,30 @@ concept Container = requires(T c) {
 <div class="ob" id="stdisp"></div>
 </div></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s15')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Inheritance & Polymorphism</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s17')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Exception Handling</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §17 EXCEPTIONS -->
-<section class="sec alt" id="s17">
+<div class="page sec-page" id="page-s17" data-sid="s17">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§17</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Exception Handling</span>
+  <span class="bc-progress">17 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 17</span><span class="tag ta">Advanced</span></div>
 <h2 class="sec-tit" data-i18n="t17">Exception Handling</h2>
 <p class="sec-desc" data-i18n="d17"><code>try</code>/<code>catch</code>/<code>throw</code> provide structured error handling. Exception classes form a hierarchy rooted at <code>std::exception</code>. Stack unwinding guarantees RAII destructors run even when exceptions propagate. Mark functions <code>noexcept</code> when they cannot throw — enables optimizations.</p></div>
@@ -2299,10 +3421,30 @@ public:
 • <strong>No guarantee</strong>: exception may leave program in invalid state ❌</div>
 <div class="co n"><strong>Performance note (LearnCpp):</strong> Exception handling has near-zero cost on the happy path (no exception thrown). Cost is incurred only when an exception is actually thrown. Use exceptions for truly exceptional conditions, not control flow.</div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s16')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Templates</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s18')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Namespaces & Scope</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §18 NAMESPACES -->
-<section class="sec nor" id="s18">
+<div class="page sec-page" id="page-s18" data-sid="s18">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§18</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Namespaces & Scope</span>
+  <span class="bc-progress">18 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 18</span><span class="tag ta">Core</span></div>
 <h2 class="sec-tit" data-i18n="t18">Namespaces & Scope Resolution</h2>
 <p class="sec-desc" data-i18n="d18">Namespaces prevent name collisions across libraries. Never write <code>using namespace std;</code> in a header file. Prefer <code>using</code> declarations (<code>using std::cout;</code>) over directives in source files. Anonymous namespaces give internal linkage without the <code>static</code> keyword.</p></div>
@@ -2362,7 +3504,15 @@ void test() {
     ::x;      // 1 (global)
 }
 
-// ── ADL (Argument-Dependent Lookup) ──────────
+// ── ADL (Argument-Dependent Lookup)
+
+// using enum (C++20) — import enum class values into scope
+enum class Color { Red, Green, Blue };
+void paint() {
+    using enum Color;
+    Color c = Red;    // no Color:: prefix needed!
+    if (c == Blue) {}
+} ──────────
 namespace Vec { struct V {}; void swap(V&amp;,V&amp;); }
 Vec::V a, b;
 swap(a, b);     // finds Vec::swap via ADL (Koenig lookup)</code></pre>
@@ -2391,10 +3541,30 @@ swap(a, b);     // finds Vec::swap via ADL (Koenig lookup)</code></pre>
 <tr><td>&lt;format&gt;</td><td class="c2">std::format, std::format_to (C++20)</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s17')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Exception Handling</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s19')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Lambdas</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §19 LAMBDAS -->
-<section class="sec alt" id="s19">
+<div class="page sec-page" id="page-s19" data-sid="s19">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§19</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Lambdas</span>
+  <span class="bc-progress">19 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 19</span><span class="tag ta">Advanced</span><span class="tag tg">Functional</span></div>
 <h2 class="sec-tit" data-i18n="t19">Lambdas & Functional Programming</h2>
 <p class="sec-desc" data-i18n="d19">Lambdas (C++11) are anonymous function objects with optional capture of local variables. They enable inline callbacks, transform/filter idioms, and custom comparators without verbose functor classes. C++14 generic lambdas use <code>auto</code> parameters. C++20 template lambdas allow full template syntax.</p></div>
@@ -2497,10 +3667,30 @@ fn(3,4);   // 12</code></pre>
 <tr><td>[x=expr]</td><td class="c2">Init capture: creates new x from expr (C++14)</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s18')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Namespaces & Scope</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s20')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Move Semantics</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §20 MOVE SEMANTICS -->
-<section class="sec nor" id="s20">
+<div class="page sec-page" id="page-s20" data-sid="s20">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§20</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Move Semantics</span>
+  <span class="bc-progress">20 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 20</span><span class="tag ta">Advanced</span><span class="tag tr2">Memory</span></div>
 <h2 class="sec-tit" data-i18n="t20">Move Semantics & Rvalue References</h2>
 <p class="sec-desc" data-i18n="d20">Move semantics (C++11) allow transferring ownership of resources without deep copies — making returning large objects or inserting into containers essentially free. An <strong>rvalue reference</strong> (<code>T&amp;&amp;</code>) binds to temporaries. <code>std::move</code> casts to rvalue; <code>std::forward</code> preserves value category in templates.</p></div>
@@ -2585,10 +3775,30 @@ Widget w2{std::move(someStr)};         // move someStr into name_</code></pre>
 <tr><td>std::exchange(x,v)</td><td class="c2">Set x=v, return old x (C++14)</td><td class="c2">Implementing move assign cleanly</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s19')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Lambdas</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s21')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Smart Pointers</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §21 SMART POINTERS -->
-<section class="sec alt" id="s21">
+<div class="page sec-page" id="page-s21" data-sid="s21">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§21</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Smart Pointers</span>
+  <span class="bc-progress">21 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 21</span><span class="tag ta">Core</span><span class="tag tr2">Memory</span></div>
 <h2 class="sec-tit" data-i18n="t21">Smart Pointers</h2>
 <p class="sec-desc" data-i18n="d21">Smart pointers wrap raw pointers in RAII wrappers that automatically manage lifetime. <code>unique_ptr</code> is the default choice — zero overhead. <code>shared_ptr</code> enables shared ownership via reference counting. <code>weak_ptr</code> breaks cycles. <strong>Never use raw <code>new</code>/<code>delete</code> in modern C++.</strong></p></div>
@@ -2672,10 +3882,30 @@ sink(std::move(up2));   // up2 is now null
 </tbody></table></div>
 <div class="co t"><strong>Rule:</strong> Prefer <code>make_unique</code> / <code>make_shared</code> over <code>new</code>. They are exception-safe, more efficient (shared_ptr: single allocation for object + control block), and document intent clearly.</div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s20')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Move Semantics</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s22')">
+      <span><span class="snb-label">Next</span><span class="snb-title">STL Containers</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §22 STL CONTAINERS -->
-<section class="sec nor" id="s22">
+<div class="page sec-page" id="page-s22" data-sid="s22">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§22</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">STL Containers</span>
+  <span class="bc-progress">22 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 22</span><span class="tag tg">STL</span></div>
 <h2 class="sec-tit" data-i18n="t22">STL Containers</h2>
 <p class="sec-desc" data-i18n="d22">The STL provides battle-tested container types covering every use case. Choose by access pattern: <code>vector</code> for cache-friendly sequential, <code>unordered_map</code> for O(1) lookup, <code>set</code> for sorted unique, <code>deque</code> for fast both-end access, <code>list</code> for O(1) middle insertion.</p></div>
@@ -2722,6 +3952,11 @@ um.load_factor();             // elements / buckets
 um.reserve(100);              // pre-allocate for 100 elements
 
 std::unordered_set&lt;int&gt;     us{1,2,3,4,5}; // O(1) lookup
+
+// C++23: std::flat_map — sorted vector-backed map (cache-friendly!)
+#include &lt;flat_map&gt;
+std::flat_map&lt;std::string,int&gt; fm; // like map but stores in sorted vectors
+fm["Alice"] = 95;  // O(log n) lookup, contiguous in memory
 std::unordered_multimap&lt;int,int&gt; umm;       // duplicate keys
 
 // ── CONTAINER ADAPTORS ────────────────────────
@@ -2774,10 +4009,30 @@ std::priority_queue&lt;int,std::vector&lt;int&gt;,std::greater&lt;int&gt;&gt; mi
 <tr><td>.swap(other)</td><td class="c2">O(1) swap contents with other container</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s21')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Smart Pointers</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s23')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Algorithms</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §23 ALGORITHMS -->
-<section class="sec alt" id="s23">
+<div class="page sec-page" id="page-s23" data-sid="s23">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§23</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Algorithms</span>
+  <span class="bc-progress">23 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 23</span><span class="tag tg">STL</span></div>
 <h2 class="sec-tit" data-i18n="t23">STL Algorithms & Iterators</h2>
 <p class="sec-desc" data-i18n="d23">The <code>&lt;algorithm&gt;</code> header provides over 100 battle-tested algorithms that work on any container through iterators. C++17 adds parallel execution policies. C++20 Ranges eliminate the need to pass begin/end pairs and allow composable pipelines with <code>|</code>.</p></div>
@@ -2793,7 +4048,8 @@ std::vector&lt;int&gt; v = {5,3,8,1,9,2,7,4,6};
 
 // ── NON-MODIFYING ─────────────────────────────
 std::for_each(v.begin(), v.end(), [](int x){ std::cout&lt;&lt;x; });
-auto it  = std::find(v.begin(), v.end(), 7);       // iterator to 7
+auto it  = std::ranges::find(v, 7);               // C++20 ranges: cleaner
+auto it2_= std::find(v.begin(), v.end(), 7);       // traditional form
 auto it2 = std::find_if(v.begin(), v.end(), [](int x){ return x&gt;5; });
 auto cnt = std::count(v.begin(), v.end(), 3);      // 1
 auto cnt2= std::count_if(v.begin(),v.end(),[](int x){return x&gt;5;});
@@ -2803,7 +4059,8 @@ bool non = std::none_of(v.begin(),v.end(),[](int x){return x&lt;0;});
 auto [mn,mx] = std::minmax_element(v.begin(), v.end()); // C++11
 
 // ── SORTING ───────────────────────────────────
-std::sort(v.begin(), v.end());                     // ascending O(n log n)
+std::ranges::sort(v);                             // C++20: no begin/end needed!
+std::sort(v.begin(), v.end());                     // pre-C++20 form (still valid)
 std::sort(v.begin(), v.end(), std::greater&lt;int&gt;{}); // descending
 std::sort(v.begin(), v.end(), [](int a,int b){ return a%2 &lt; b%2; }); // custom
 std::stable_sort(v.begin(), v.end());              // preserves equal order
@@ -2833,8 +4090,11 @@ std::copy(v.begin(), v.end(), dst.begin());
 std::copy_if(v.begin(), v.end(), std::back_inserter(dst),
     [](int x){ return x%2==0; });                  // copy evens
 
-// Remove-erase idiom
-v.erase(std::remove(v.begin(),v.end(),3), v.end()); // erase all 3s
+// C++20: std::erase / std::erase_if (replaces the remove-erase idiom!)
+std::erase(v, 3);                              // erase all 3s — cleaner!
+std::erase_if(v, [](int x){ return x &lt; 0; }); // erase if negative
+// Old remove-erase idiom (still valid pre-C++20):
+// v.erase(std::remove(v.begin(),v.end(),3), v.end());
 v.erase(std::remove_if(v.begin(),v.end(),[](int x){return x&lt;0;}),v.end());
 
 // ── NUMERIC ───────────────────────────────────
@@ -2854,7 +4114,9 @@ std::transform(std::execution::par, v.begin(),v.end(),v.begin(),
 namespace rv = std::views;
 auto even_sq = v | rv::filter([](int x){ return x%2==0; })
                  | rv::transform([](int x){ return x*x; });
-for (int x : even_sq) std::cout &lt;&lt; x &lt;&lt; ' ';  // lazy evaluation!</code></pre>
+for (int x : even_sq) std::cout &lt;&lt; x &lt;&lt; ' ';  // lazy evaluation — filters/transforms only run when iterated!
+// C++23: std::ranges::to<vector>() to materialise a range
+// auto result = v | rv::filter(...) | rv::transform(...) | std::ranges::to&lt;std::vector&gt;();</code></pre>
 </div>
 </div>
 <div>
@@ -2885,10 +4147,30 @@ for (int x : even_sq) std::cout &lt;&lt; x &lt;&lt; ' ';  // lazy evaluation!</c
 <tr><td>Contiguous (C++17)</td><td class="c2">Random + elements contiguous</td><td class="mono">vector::iterator, span::iterator</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s22')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">STL Containers</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s24')">
+      <span><span class="snb-label">Next</span><span class="snb-title">I/O Streams & Files</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §24 I/O STREAMS & FILES -->
-<section class="sec nor" id="s24">
+<div class="page sec-page" id="page-s24" data-sid="s24">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§24</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">I/O Streams & Files</span>
+  <span class="bc-progress">24 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 24</span><span class="tag tg">STL</span></div>
 <h2 class="sec-tit" data-i18n="t24">I/O Streams & File I/O</h2>
 <p class="sec-desc" data-i18n="d24">C++ I/O is built on a hierarchy of stream classes. <code>cout</code>/<code>cin</code> handle console; <code>fstream</code> handles files; <code>stringstream</code> handles in-memory strings. C++20 adds <code>std::format</code> for type-safe formatting. C++23 adds <code>std::print</code>.</p></div>
@@ -2925,21 +4207,26 @@ if (!(std::cin &gt;&gt; n)) {
     std::cin.ignore(std::numeric_limits&lt;std::streamsize&gt;::max(), '\n');
 }
 
-// ── FORMATTING MANIPULATORS ──────────────────
-std::cout &lt;&lt; std::setw(10) &lt;&lt; std::setfill('0') &lt;&lt; 42 &lt;&lt; '\n'; // 0000000042
-std::cout &lt;&lt; std::left &lt;&lt; std::setw(10) &lt;&lt; "hi" &lt;&lt; '\n';       // hi        
-std::cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(4) &lt;&lt; 3.14159 &lt;&lt; '\n'; // 3.1416
-std::cout &lt;&lt; std::scientific &lt;&lt; 12345.678 &lt;&lt; '\n'; // 1.234568e+04
-std::cout &lt;&lt; std::hex &lt;&lt; 255 &lt;&lt; '\n';           // ff
-std::cout &lt;&lt; std::oct &lt;&lt; 255 &lt;&lt; '\n';           // 377
-std::cout &lt;&lt; std::boolalpha &lt;&lt; true &lt;&lt; '\n';    // true
-std::cout &lt;&lt; std::showpos &lt;&lt; 42 &lt;&lt; '\n';        // +42
+// ── C++20 std::format (PREFERRED over manipulators) ──────
+#include &lt;format&gt;
+std::cout &lt;&lt; std::format("{:010d}\n",  42);       // 0000000042
+std::cout &lt;&lt; std::format("{:&lt;10}\n",   "hi");     // hi        
+std::cout &lt;&lt; std::format("{:.4f}\n",   3.14159);  // 3.1416
+std::cout &lt;&lt; std::format("{:e}\n",     12345.678);// 1.234568e+04
+std::cout &lt;&lt; std::format("{:#x}\n",    255);      // 0xff
+std::cout &lt;&lt; std::format("{:#o}\n",    255);      // 0377
+std::cout &lt;&lt; std::format("{}\n",       true);     // true  (no boolalpha needed)
+std::cout &lt;&lt; std::format("{:+}\n",     42);       // +42
+
+// Legacy iomanip (still valid but verbose)
+std::cout &lt;&lt; std::setw(10) &lt;&lt; std::setfill('0') &lt;&lt; 42; // 0000000042
 
 // ── std::format (C++20) ──────────────────────
 std::string s = std::format("Hello, {}! Pi = {:.4f}", "World", 3.14159);
 // "Hello, World! Pi = 3.1416"
 std::string t = std::format("{:&gt;10} | {:&lt;10} | {:^10}", "right","left","center");
-std::print("Hello {}!\n", "C++23");   // C++23 std::print
+std::print("Hello {}!\n", "C++23");   // C++23: direct to stdout, no cout
+std::println("Pi = {:.4f}", 3.14159);  // C++23: adds newline automatically
 
 // ── FILE I/O ──────────────────────────────────
 // Writing
@@ -3013,10 +4300,30 @@ iss &gt;&gt; a &gt;&gt; b2 &gt;&gt; cc;            // parse ints from string</co
 <tr><td>{:0&gt;5}</td><td class="c2">Pad with '0', right-align, width 5</td><td class="mono">format("{:0&gt;5}", 42) → "00042"</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s23')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Algorithms</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s25')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Concurrency</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §25 CONCURRENCY -->
-<section class="sec alt" id="s25">
+<div class="page sec-page" id="page-s25" data-sid="s25">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§25</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Concurrency</span>
+  <span class="bc-progress">25 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 25</span><span class="tag ta">Advanced</span><span class="tag tg">C++11</span></div>
 <h2 class="sec-tit" data-i18n="t25">Concurrency & Multithreading</h2>
 <p class="sec-desc" data-i18n="d25">C++11 introduced a portable threading model. <code>std::thread</code> launches OS threads. Shared data requires synchronization via <code>mutex</code>. Prefer <code>std::async</code> and <code>std::future</code> for task-based parallelism. C++20 adds <code>jthread</code> (auto-joining), <code>latch</code>, <code>barrier</code>, and <code>semaphore</code>.</p></div>
@@ -3034,14 +4341,18 @@ void worker(int id, int n) {
     for (int i=0; i&lt;n; ++i)
         std::cout &lt;&lt; "Thread " &lt;&lt; id &lt;&lt; " step " &lt;&lt; i &lt;&lt; '\n';
 }
-std::thread t1(worker, 1, 5);    // launch thread
-std::thread t2(worker, 2, 5);
-t1.join();   t2.join();          // wait for completion
-// OR:
-// t1.detach(); // let run independently (dangerous if main exits!)
+// C++20: std::jthread — auto-joins, supports cooperative cancellation
+std::jthread t1(worker, 1, 5);   // auto-joins when t1 goes out of scope
+std::jthread t2(worker, 2, 5);   // no manual join() needed!
 
-// std::jthread (C++20): auto-joins on destruction
-std::jthread jt(worker, 3, 5);  // no need to call join()
+// With stop_token (C++20) — cooperative cancellation
+std::jthread bg([](std::stop_token st) {
+    while (!st.stop_requested()) {
+        doWork();
+    }
+});
+bg.request_stop();               // signal the thread to stop gracefully
+// bg.join() called automatically
 
 // ── MUTEX & LOCK ──────────────────────────────
 std::mutex mtx;
@@ -3096,6 +4407,13 @@ counter.load();    counter.store(5);
 counter.exchange(10);
 counter.compare_exchange_strong(expected, desired);
 
+// C++20: atomic_flag now has test() and wait()
+std::atomic_flag flag = ATOMIC_FLAG_INIT;
+flag.test();          // read without changing
+flag.wait(true);      // block until flag becomes false (efficient!)
+flag.notify_one();    // wake one waiter
+flag.notify_all();    // wake all waiters
+
 // ── ASYNC & FUTURE ────────────────────────────
 auto fut = std::async(std::launch::async, [](int n){
     return n * n;
@@ -3146,10 +4464,30 @@ std::counting_semaphore&lt;10&gt; sem{3}; // max 3 concurrent</code></pre>
 <tr><td>semaphore</td><td class="c2">Count-based resource limiting</td><td class="mono">C++20</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s24')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">I/O Streams & Files</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s26')">
+      <span><span class="snb-label">Next</span><span class="snb-title">C++11 & C++14</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §26 C++11/14 -->
-<section class="sec nor" id="s26">
+<div class="page sec-page" id="page-s26" data-sid="s26">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§26</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">C++11 & C++14</span>
+  <span class="bc-progress">26 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 26</span><span class="tag tg">Modern</span></div>
 <h2 class="sec-tit" data-i18n="t26">C++11 & C++14 Features</h2>
 <p class="sec-desc" data-i18n="d26">C++11 was a landmark release that modernized the language. C++14 polished it further. Together they introduced move semantics, smart pointers, lambdas, concurrency, <code>auto</code>, range-based for, uniform initialization, and dozens more features that define modern C++.</p></div>
@@ -3220,10 +4558,15 @@ auto path = "/tmp"sv;    // std::string_view
 // make_unique
 auto ptr = std::make_unique&lt;int&gt;(42);
 
-// Generic lambdas (auto parameters)
+// Generic lambdas — auto parameters (C++14)
 auto mul = [](auto a, auto b){ return a * b; };
 mul(3, 4);    // int: 12
 mul(2.5, 3.0); // double: 7.5
+
+// Template lambda (C++20) — explicit template parameter
+auto maxOf = []&lt;typename T&gt;(T a, T b) -&gt; T { return a &gt; b ? a : b; };
+maxOf(3, 7);        // 7  (int)
+maxOf(2.5, 1.9);    // 2.5 (double)
 
 // Lambda init-capture (capture by move)
 auto up2 = std::make_unique&lt;int&gt;(7);
@@ -3277,10 +4620,30 @@ float  pf = pi&lt;float&gt;;</code></pre>
 <tr><td>Digit separator ' </td><td class="mono">C++14</td><td class="mono">§03</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s25')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">Concurrency</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s27')">
+      <span><span class="snb-label">Next</span><span class="snb-title">C++17</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §27 C++17 -->
-<section class="sec alt" id="s27">
+<div class="page sec-page" id="page-s27" data-sid="s27">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§27</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">C++17</span>
+  <span class="bc-progress">27 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 27</span><span class="tag tg">Modern</span></div>
 <h2 class="sec-tit" data-i18n="t27">C++17 Features</h2>
 <p class="sec-desc" data-i18n="d27">C++17 introduced structured bindings, <code>if constexpr</code>, class template argument deduction (CTAD), fold expressions, inline variables, <code>std::optional</code>, <code>std::variant</code>, <code>std::any</code>, <code>std::string_view</code>, <code>std::filesystem</code>, and parallel algorithms.</p></div>
@@ -3346,6 +4709,11 @@ if (result) std::cout &lt;&lt; *result;       // dereference if has value
 result.value_or(-1);                    // -1 if empty
 result.has_value();                     // bool
 
+// C++20 string methods
+"hello world".starts_with("hello");     // true
+"hello world".ends_with("world");       // true
+"hello world".contains("lo wo");        // true (C++23)
+
 // ── std::variant (type-safe union) ───────────
 std::variant&lt;int, double, std::string&gt; var;
 var = 42;          var = 3.14;          var = "hello";
@@ -3398,10 +4766,30 @@ fs::remove("old.txt");</code></pre>
 <tr><td>shared_mutex</td><td class="c2">Multiple-reader / single-writer lock</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s26')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">C++11 & C++14</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s28')">
+      <span><span class="snb-label">Next</span><span class="snb-title">C++20 & C++23</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §28 C++20/23 -->
-<section class="sec nor" id="s28">
+<div class="page sec-page" id="page-s28" data-sid="s28">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§28</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">C++20 & C++23</span>
+  <span class="bc-progress">28 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 28</span><span class="tag tg">Modern</span><span class="tag tp">C++20/23</span></div>
 <h2 class="sec-tit" data-i18n="t28">C++20 & C++23 Features</h2>
 <p class="sec-desc" data-i18n="d28">C++20 is the biggest revision since C++11: Concepts, Ranges, Coroutines, and Modules form the "Big Four". C++23 refines the library with <code>std::print</code>, <code>std::expected</code>, <code>std::mdspan</code>, and more. These features make modern C++ safer and more expressive than ever.</p></div>
@@ -3459,7 +4847,9 @@ Config cfg{ .width=1920, .height=1080, .vsync=true };
 
 // ── C++20: CONSTEVAL / CONSTINIT ─────────────
 consteval int compileOnly(int x) { return x*x; } // must be CT
-constinit int g_init = compileOnly(5);  // guaranteed const-init
+constinit int g_init = 25;             // C++20: guaranteed const-init, not constexpr
+// constinit ensures the variable is initialized at compile time
+// but unlike constexpr it CAN be modified at runtime
 
 // ── C++20: MODULES (replaces #include) ────────
 // mymodule.cppm:
@@ -3473,11 +4863,13 @@ int r = add(3,4);  // 7
 // ── C++20: COROUTINES ─────────────────────────
 #include &lt;coroutine&gt;
 // A generator that yields values lazily
-Generator&lt;int&gt; fibonacci() {
+// C++23 std::generator — standard coroutine range generator
+#include &lt;generator&gt;   // C++23
+std::generator&lt;int&gt; fibonacci() {
     int a=0, b=1;
     while (true) {
-        co_yield a;          // suspend and return a value
-        auto tmp = a+b; a=b; b=tmp;
+        co_yield a;
+        auto tmp=a+b; a=b; b=tmp;
     }
 }
 for (int x : fibonacci() | rv::take(10))
@@ -3539,10 +4931,30 @@ mat[1,2] = 42;   // C++23 multi-dimensional subscript</code></pre>
 <tr><td>Multidim subscript []</td><td class="mono">C++23</td><td class="c2">a[i,j] for multi-dimensional indexing</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s27')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">C++17</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s29')">
+      <span><span class="snb-label">Next</span><span class="snb-title">Preprocessor</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §29 PREPROCESSOR -->
-<section class="sec alt" id="s29">
+<div class="page sec-page" id="page-s29" data-sid="s29">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§29</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Preprocessor</span>
+  <span class="bc-progress">29 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 29</span><span class="tag tb2">Build</span></div>
 <h2 class="sec-tit" data-i18n="t29">Preprocessor Directives</h2>
 <p class="sec-desc" data-i18n="d29">The preprocessor runs before compilation, performing text substitution. It handles file inclusion, macro expansion, and conditional compilation. While macros are powerful, prefer <code>constexpr</code>, <code>inline</code>, and templates in modern C++ — macros have no scope and no type safety.</p></div>
@@ -3600,7 +5012,9 @@ __LINE__       // current line number (int)
 __func__       // current function name (C99, char[])
 __DATE__       // compilation date "Mmm dd yyyy"
 __TIME__       // compilation time "hh:mm:ss"
-__cplusplus    // 202302L for C++23, 202002L for C++20, etc.
+__cplusplus    // 202302L for C++23, 202002L for C++20, 201703L for C++17
+__has_cpp_attribute(nodiscard) // test for attribute support
+__has_include(&lt;format&gt;)        // test if header is available (C++17)
 __STDC_VERSION__ // C standard version if compiling as C
 _WIN32         // defined on Windows (32 or 64 bit)
 __APPLE__      // defined on Apple platforms
@@ -3659,13 +5073,33 @@ constexpr T maxVal(T a, T b) { return a &gt; b ? a : b; } // ✓
 </tbody></table></div>
 <div class="co w"><strong>Macro pitfalls:</strong> No type safety, no scoping, no overloading, expands everywhere (including string literals), causes hard-to-debug errors. Always prefer constexpr/inline/template when possible. Use macros only for conditional compilation, include guards, and cross-platform compatibility.</div>
 </div></div>
-</section>
+
+<div class="sec-nav">
+  <button class="sec-nav-btn prev" onclick="navigate('s28')">
+      <span>←</span>
+      <span><span class="snb-label">Previous</span><span class="snb-title">C++20 & C++23</span></span>
+    </button>
+  <button class="sec-nav-btn home-btn" onclick="navigate('home')">⌂ All Sections</button>
+  <button class="sec-nav-btn next" onclick="navigate('s30')">
+      <span><span class="snb-label">Next</span><span class="snb-title">All Keywords</span></span>
+      <span>→</span>
+    </button>
+</div>
+</div><!-- /page -->
 
 <!-- §30 ALL KEYWORDS -->
-<section class="sec nor" id="s30">
+<div class="page sec-page" id="page-s30" data-sid="s30">
+<div class="breadcrumb">
+  <span class="bc-home" onclick="navigate('home')">⌂ Home</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-num">§30</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">All Keywords</span>
+  <span class="bc-progress">30 / 30</span>
+</div>
 <div class="sec-hd"><div class="sec-meta"><span class="sec-num">§ 30</span><span class="tag tb2">Reference</span></div>
 <h2 class="sec-tit" data-i18n="t30">All C++ Keywords Reference</h2>
-<p class="sec-desc" data-i18n="d30">C++ has 98 reserved keywords as of C++23. They cannot be used as identifiers. Keywords are grouped by function — hover any keyword to see its description. Colors indicate category.</p></div>
+<p class="sec-desc" data-i18n="d30">C++ has 98 reserved keywords as of C++23. C++20 added <code>concept</code>, <code>requires</code>, <code>consteval</code>, <code>constinit</code>, <code>co_await</code>, <code>co_yield</code>, <code>co_return</code>, and <code>char8_t</code>. They cannot be used as identifiers. Keywords are grouped by function — hover any keyword to see its description. Colors indicate category.</p></div>
 <div class="g2 mb4">
 <div>
 <div class="card mb4"><div class="ch"><span class="ch-dot a"></span>All 98 Keywords — Click to Highlight</div>
@@ -3745,9 +5179,10 @@ constexpr T maxVal(T a, T b) { return a &gt; b ? a : b; } // ✓
 <tr><td>and / or / not / xor etc.</td><td class="mono">Alt</td><td class="c2">Operator alternative tokens (ISO C++)</td></tr>
 </tbody></table></div>
 </div></div>
-</section>
 
-<footer>
+</div><!-- /page -->
+
+<div class="page" id="page-footer"><footer>
 <div style="font-family:var(--mono);font-size:14px;color:var(--txt2);margin-bottom:10px">// C++ — zero-overhead abstractions, maximum control</div>
 <div>Based on <strong>A Tour of C++</strong> (Stroustrup) · <strong>C++ Crash Course</strong> (Lospinoso) · <strong>Beginning C++23</strong> · <strong>cplusplus.com</strong> · <strong>LearnCpp.com</strong></div>
 <div class="mt3" style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
@@ -3755,14 +5190,21 @@ constexpr T maxVal(T a, T b) { return a &gt; b ? a : b; } // ✓
 <span class="pill pa">C++20</span><span class="pill pa">C++23</span>
 <span class="pill pg">10 Languages</span><span class="pill pp">2 Themes</span>
 </div>
-</footer>
+</footer></div>
 </main>
 
 <script>
-// ══════════════════════════════════════════════
-// TRANSLATIONS  (10 languages, excluding Arabic)
-// ══════════════════════════════════════════════
-const LANGS = {
+// ── CORE HELPERS ─────────────────────────────
+function ge(id) { return document.getElementById(id); }
+function gv(id) { var el=ge(id); return el ? el.value : ''; }
+function gq(sel) { return document.querySelector(sel); }
+
+// ── SAFE QUERY ALL ────────────────────────────
+function qa(sel) { return document.querySelectorAll(sel); }
+function qaEach(sel, fn) { var els=qa(sel); for(var i=0;i<els.length;i++) fn(els[i]); }
+
+
+var LANGS = {
 en:{
  htag:"// Multi-paradigm · Systems · Zero-Overhead Abstractions",
  hsub:"The complete professional reference — every keyword, operator, container, algorithm, and modern feature from C++98 to C++23, with interactive examples in 10 languages.",
@@ -4007,165 +5449,204 @@ ko:{
 }
 };
 
-let curLang = 'en';
+
+// ── LANGUAGE ──────────────────────────────────
+var curLang = 'en';
 function setLang(code) {
   curLang = code;
-  const L = LANGS[code] || LANGS.en;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const k = el.getAttribute('data-i18n');
+  var L = LANGS[code] || LANGS.en;
+  qaEach('[data-i18n]', function(el) {
+    var k = el.getAttribute('data-i18n');
     if (L[k]) el.textContent = L[k];
   });
   document.documentElement.setAttribute('lang', code);
-  // Arabic RTL support
-  const isAr = code === 'ar';
+  var isAr = (code === 'ar');
   document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
-  document.body.style.fontFamily = isAr
-    ? '"Segoe UI", "Noto Sans Arabic", "Tahoma", "Arial", sans-serif'
-    : '';
-  // Flip sidebar and main margin for RTL
-  const sb = document.getElementById('sb');
-  const mn = document.getElementById('mn');
-  const tb = document.getElementById('tb');
+  document.body.style.fontFamily = isAr ? '"Segoe UI","Noto Sans Arabic","Tahoma",sans-serif' : '';
+  var sb=ge('sb'), mn=ge('mn');
   if (sb) {
     sb.style.right = isAr ? '0' : '';
     sb.style.left  = isAr ? 'auto' : '0';
     sb.style.borderRight = isAr ? 'none' : '';
     sb.style.borderLeft  = isAr ? '1px solid var(--border)' : '';
   }
-  // fix transform direction for RTL mobile drawer
-  if (window.innerWidth <= 800) {
-    if (sb && !sb.classList.contains('open')) {
-      sb.style.transform = isAr ? 'translateX(100%)' : 'translateX(-100%)';
-    }
-  }
   if (mn) {
     mn.style.marginLeft  = isAr ? '0' : '';
     mn.style.marginRight = isAr ? 'var(--sbw)' : '';
   }
-  // Flip nav border-left to border-right for RTL
-  document.querySelectorAll('.ni').forEach(n => {
-    n.style.borderLeft  = isAr ? 'none' : '';
-    n.style.borderRight = isAr ? '2px solid transparent' : '';
-    if (n.classList.contains('on')) {
-      n.style.borderRightColor = isAr ? 'var(--acc)' : '';
-    }
-  });
-  // Flip search icon side
-  const sic = document.querySelector('.tb-srch-ic');
-  if (sic) { sic.style.left = isAr ? 'auto' : '9px'; sic.style.right = isAr ? '9px' : ''; }
-  const sinp = document.querySelector('.tb-srch input');
-  if (sinp) { sinp.style.paddingLeft = isAr ? '10px' : '30px'; sinp.style.paddingRight = isAr ? '30px' : '10px'; }
-  localStorage.setItem('cpp_lang', code);
+  try { localStorage.setItem('cpp_lang', code); } catch(e) {}
 }
 
+// ── THEME ─────────────────────────────────────
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
-  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('tbn-' + t);
+  qaEach('.theme-btn', function(b){ b.classList.remove('active'); });
+  var btn = ge('tbn-' + t);
   if (btn) btn.classList.add('active');
-  localStorage.setItem('cpp_theme', t);
+  try { localStorage.setItem('cpp_theme', t); } catch(e) {}
 }
 
+// ── SIDEBAR ───────────────────────────────────
 function toggleSG(hdr) {
-  const items = hdr.nextElementSibling;
-  const collapsed = items.classList.toggle('collapsed');
+  var items = hdr.nextElementSibling;
+  var collapsed = items.classList.toggle('collapsed');
   hdr.classList.toggle('collapsed', collapsed);
   items.style.maxHeight = collapsed ? '0' : items.scrollHeight + 'px';
 }
-
-function goTo(id) {
-  const el = document.getElementById(id);
-  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-}
-
-function setupNav() {
-  const ids = ['s01','s02','s03','s04','s05','s06','s07','s08','s09','s10',
-               's11','s12','s13','s14','s15','s16','s17','s18','s19','s20',
-               's21','s22','s23','s24','s25','s26','s27','s28','s29','s30'];
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        document.querySelectorAll('.ni').forEach(n => n.classList.remove('on'));
-        document.querySelectorAll('.ni').forEach(n => {
-          if (n.getAttribute('onclick') === "goTo('" + e.target.id + "')") n.classList.add('on');
-        });
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '-52px 0px -60% 0px' });
-  ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
-  // init sidebar heights
-  document.querySelectorAll('.sg-items').forEach(el => {
-    el.style.maxHeight = el.scrollHeight + 'px';
-  });
-}
-
-function copyCode(btn) {
-  const pre = btn.closest('.ct').nextElementSibling;
-  const code = pre ? pre.textContent : '';
-  navigator.clipboard.writeText(code).then(() => {
-    btn.textContent = 'Copied!'; btn.classList.add('ok');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 1800);
-  }).catch(() => { btn.textContent = 'Error'; });
-}
-
-// ── MOBILE SIDEBAR ───────────────────────────
 function toggleSB() {
-  const sb = document.getElementById('sb');
-  const ov = document.getElementById('sb-overlay');
-  const btn = document.getElementById('ham-btn');
-  const open = sb.classList.toggle('open');
-  ov.style.display = open ? 'block' : 'none';
-  btn.textContent = open ? '✕' : '☰';
-  btn.setAttribute('aria-expanded', open);
-  document.body.style.overflow = open ? 'hidden' : '';
+  var sb=ge('sb'), ov=ge('sb-overlay'), btn=ge('ham-btn');
+  if (!sb) return;
+  var isOpen = sb.classList.toggle('open');
+  if (ov)  ov.style.display = isOpen ? 'block' : 'none';
+  if (btn) { btn.textContent = isOpen ? '✕' : '☰'; }
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 function closeSB() {
-  const sb = document.getElementById('sb');
-  const ov = document.getElementById('sb-overlay');
-  const btn = document.getElementById('ham-btn');
-  sb.classList.remove('open');
-  ov.style.display = 'none';
-  btn.textContent = '☰';
-  btn.setAttribute('aria-expanded', 'false');
+  var sb=ge('sb'), ov=ge('sb-overlay'), btn=ge('ham-btn');
+  if (sb)  sb.classList.remove('open');
+  if (ov)  ov.style.display = 'none';
+  if (btn) btn.textContent = '☰';
   document.body.style.overflow = '';
 }
 
-// Close sidebar on nav item click (mobile)
-document.addEventListener('click', e => {
-  if (e.target.closest('.ni') && window.innerWidth <= 800) closeSB();
-});
+// ── COPY CODE ─────────────────────────────────
+function copyCode(btn) {
+  var pre = btn.closest('.ct').nextElementSibling;
+  var code = pre ? pre.textContent : '';
+  navigator.clipboard.writeText(code).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = 'Copy'; }, 1800);
+  }).catch(function(){ btn.textContent = 'Error'; });
+}
 
-// Close sidebar on Escape key
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    if (document.getElementById('sb').classList.contains('open')) closeSB();
-    closeSR();
+// ── NAVIGATION ────────────────────────────────
+var SID_LIST = ['s01','s02','s03','s04','s05','s06','s07','s08','s09','s10',
+                's11','s12','s13','s14','s15','s16','s17','s18','s19','s20',
+                's21','s22','s23','s24','s25','s26','s27','s28','s29','s30'];
+var currentPage = 'home';
+var isAnimating  = false;
+var BOOK_MODE    = false;   // defined early so book script can override
+
+function navigate(sid, pushState) {
+  if (pushState === undefined) pushState = true;
+  // delegate to book mode if active
+  if (BOOK_MODE && typeof bookNav === 'function') { bookNav(sid); return; }
+  if (isAnimating) return;
+  var pageId = sid === 'home' ? 'page-home' : ('page-' + sid);
+  var target = ge(pageId);
+  if (!target) return;
+  isAnimating = true;
+  qaEach('.page', function(p) { p.classList.remove('active'); });
+  target.classList.add('active');
+  window.scrollTo(0, 0);
+  currentPage = sid;
+  // Hash-only navigation (no history API — blocked in sandboxed iframes)
+  // navigation state kept in JS only (no URL write - sandbox restricted)
+  updateProgress(sid);
+  updateNavHL(sid);
+  if (window.innerWidth <= 800) closeSB();
+  setTimeout(function() {
+    if (target) {
+      var codeEls = target.querySelectorAll('code.language-cpp:not([data-highlighted])');
+      for (var i=0; i<codeEls.length; i++) hljs.highlightElement(codeEls[i]);
+    }
+    isAnimating = false;
+    updateBotNav(currentPage);
+  }, 60);
+}
+
+function navStep(dir) {
+  if (currentPage === 'home') { if (dir===1) navigate('s01'); return; }
+  var idx = SID_LIST.indexOf(currentPage);
+  if (idx < 0) return;
+  var next = idx + dir;
+  if (next < 0)                  navigate('home');
+  else if (next >= SID_LIST.length) navigate('home');
+  else                           navigate(SID_LIST[next]);
+}
+
+function updateProgress(sid) {
+  var fill = ge('prog-bar-fill');
+  if (!fill) return;
+  if (sid === 'home') { fill.style.transform = 'scaleX(0)'; return; }
+  var idx = SID_LIST.indexOf(sid);
+  var pct = idx < 0 ? 0 : (idx + 1) / SID_LIST.length;
+  fill.style.transform = 'scaleX(' + pct + ')';
+}
+
+function updateNavHL(sid) {
+  qaEach('.ni', function(n) {
+    var oc = n.getAttribute('onclick') || '';
+    n.classList.toggle('on', oc.indexOf("'" + sid + "'") >= 0);
+  });
+}
+
+function updateBotNav(sid) {
+  var bn = ge('bot-nav');
+  if (!bn) return;
+  bn.classList.add('visible');
+  var bnHome = ge('bn-home');
+  var bnPrev = ge('bn-prev');
+  var bnNext = ge('bn-next');
+  if (bnHome) bnHome.classList.toggle('active', sid === 'home');
+  var idx = SID_LIST.indexOf(sid);
+  if (bnPrev) bnPrev.style.opacity = (sid==='home' || idx<=0) ? '0.35' : '1';
+  if (bnNext) bnNext.style.opacity = idx===SID_LIST.length-1 ? '0.35' : '1';
+}
+
+function setupNav() {
+  qaEach('.sg-items', function(el) { el.style.maxHeight = el.scrollHeight + 'px'; });
+}
+
+// hashchange listener removed - sandbox restricts location manipulation
+
+// ── KEYBOARD NAVIGATION ───────────────────────
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT') return;
+  if (e.altKey||e.ctrlKey||e.metaKey) return;
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') navStep(1);
+  else if (e.key==='ArrowLeft'||e.key==='ArrowUp') navStep(-1);
+  else if (e.key==='h') navigate('home');
+  else if (e.key==='Escape') {
+    var sb=ge('sb'), sr=ge('sr');
+    if (sb && sb.classList.contains('open')) closeSB();
+    else if (sr && sr.classList.contains('on')) closeSR();
+    else if (currentPage!=='home') navigate('home');
   }
 });
 
-// Touch swipe to close sidebar (swipe left to close on mobile)
+// ── SWIPE GESTURE ─────────────────────────────
 (function() {
-  let startX = 0, startY = 0;
-  document.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-  }, { passive: true });
-  document.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    const dy = Math.abs(e.changedTouches[0].clientY - startY);
-    const sb = document.getElementById('sb');
-    if (sb.classList.contains('open') && dx < -60 && dy < 80) closeSB();
-    if (!sb.classList.contains('open') && dx > 60 && dy < 80 && startX < 30) toggleSB();
-  }, { passive: true });
-})();
-const SEARCH_INDEX = [
+  var sx=0, sy=0;
+  document.addEventListener('touchstart', function(e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = Math.abs(e.changedTouches[0].clientY - sy);
+    if (dy > 80 || Math.abs(dx) < 70) return;
+    var tgt = e.target;
+    while (tgt && tgt !== document.body) {
+      if (tgt.tagName==='PRE'||tgt.tagName==='INPUT'||tgt.tagName==='SELECT') return;
+      tgt = tgt.parentElement;
+    }
+    var sb = ge('sb');
+    if (sb && sb.classList.contains('open')) { if (dx < -60) closeSB(); return; }
+    if (sx < 30 && dx > 60) { toggleSB(); return; }
+    navStep(dx < 0 ? 1 : -1);
+  }, {passive:true});
+}());
+
+// ── SEARCH ────────────────────────────────────
+var SEARCH_INDEX = [
   {id:'s01',t:'Introduction Philosophy C++ history Stroustrup paradigm'},
-  {id:'s02',t:'Setup Compilation CMake g++ clang flags -O2 -Wall header source ODR'},
+  {id:'s02',t:'Setup Compilation CMake g++ clang flags Wall header source ODR'},
   {id:'s03',t:'Types int double float char bool auto decltype literals sizeof fixed-width'},
-  {id:'s04',t:'Variables storage scope auto const constexpr static extern thread_local linkage typedef using'},
+  {id:'s04',t:'Variables storage scope constexpr static extern thread_local linkage typedef using'},
   {id:'s05',t:'Operators arithmetic comparison logical bitwise assignment sizeof precedence spaceship'},
   {id:'s06',t:'Control Flow if else switch for while do break continue return goto range-based'},
-  {id:'s07',t:'Functions overloading default arguments inline constexpr noexcept variadic templates pass by reference'},
+  {id:'s07',t:'Functions overloading default arguments inline constexpr noexcept variadic templates'},
   {id:'s08',t:'Arrays strings vector array string_view C-string push_back substr find replace'},
   {id:'s09',t:'Pointers references nullptr arithmetic dereference address void pointer const pointer'},
   {id:'s10',t:'Dynamic memory new delete heap stack RAII placement new memory leak'},
@@ -4192,32 +5673,110 @@ const SEARCH_INDEX = [
 ];
 
 function doSearch(q) {
-  const sr = document.getElementById('sr');
+  var sr = ge('sr');
+  if (!sr) return;
   if (!q || q.length < 2) { sr.classList.remove('on'); return; }
-  const terms = q.toLowerCase().split(/\s+/);
-  const results = SEARCH_INDEX.filter(item =>
-    terms.every(t => item.t.toLowerCase().includes(t) || item.id.toLowerCase().includes(t))
-  ).slice(0, 8);
-  if (!results.length) { sr.innerHTML = '<div class="si"><div class="si-t" style="color:var(--txt3)">No results found</div></div>'; sr.classList.add('on'); return; }
-  sr.innerHTML = results.map(r => {
-    const sec = document.getElementById(r.id);
-    const title = sec ? sec.querySelector('.sec-tit')?.textContent : r.id;
-    const match = r.t.split(' ').filter(w => terms.some(t => w.toLowerCase().includes(t))).slice(0,4).join(', ');
-    return `<div class="si" onclick="goTo('${r.id}');closeSR()"><div class="si-t">${title}</div><div class="si-m"><em>${match}</em></div></div>`;
-  }).join('');
+  var terms = q.toLowerCase().split(/\s+/);
+  var results = [];
+  for (var i=0; i<SEARCH_INDEX.length; i++) {
+    var item = SEARCH_INDEX[i];
+    var match = true;
+    for (var j=0; j<terms.length; j++) {
+      if (item.t.toLowerCase().indexOf(terms[j]) < 0 && item.id.indexOf(terms[j]) < 0) {
+        match = false; break;
+      }
+    }
+    if (match) results.push(item);
+    if (results.length >= 8) break;
+  }
+  if (!results.length) {
+    sr.innerHTML = '<div class="si"><div class="si-t" style="color:var(--txt3)">No results found</div></div>';
+    sr.classList.add('on'); return;
+  }
+  var html = '';
+  for (var k=0; k<results.length; k++) {
+    var r = results[k];
+    var pg  = ge('page-' + r.id);
+    var titEl = pg ? pg.querySelector('.sec-tit') : null;
+    var title = titEl ? titEl.textContent : r.id;
+    html += '<div class="si" onclick="navigate(\'' + r.id + '\');closeSR()">';
+    html += '<div class="si-t">' + title + '</div>';
+    html += '<div class="si-m"><em>' + r.id + '</em></div></div>';
+  }
+  sr.innerHTML = html;
   sr.classList.add('on');
 }
-function closeSR() { document.getElementById('sr').classList.remove('on'); document.getElementById('si').value = ''; }
-document.addEventListener('click', e => { if (!e.target.closest('#sr') && !e.target.closest('#si')) closeSR(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSR(); });
+
+function closeSR() {
+  var sr=ge('sr'), si=ge('si'), hs=ge('home-si');
+  if (sr) sr.classList.remove('on');
+  if (si) si.value = '';
+  if (hs) hs.value = '';
+}
+
+// Click outside to close search
+document.addEventListener('click', function(e) {
+  var tgt = e.target;
+  if (!tgt.closest('#sr') && !tgt.closest('#si') && !tgt.closest('#home-si')) closeSR();
+});
+
+// Home search sync with topbar search
+document.addEventListener('DOMContentLoaded', function() {
+  var hs = ge('home-si');
+  if (hs) hs.addEventListener('input', function() {
+    var si = ge('si');
+    if (si) si.value = hs.value;
+    doSearch(hs.value);
+  });
+});
+
+// Legacy goTo
+function goTo(id) {
+  if (id==='top') navigate('home');
+  else {
+    var found = false;
+    for (var i=0; i<SID_LIST.length; i++) {
+      if (SID_LIST[i]===id) { found=true; break; }
+    }
+    if (found) navigate(id);
+    else { var el=ge(id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+  }
+}
+
+// Bottom nav language labels
+var BN = {
+  es:{bn_home:'Inicio',bn_prev:'Ant',bn_next:'Sig',bn_menu:'Menú'},
+  fr:{bn_home:'Accueil',bn_prev:'Préc',bn_next:'Suiv',bn_menu:'Menu'},
+  de:{bn_home:'Start',bn_prev:'Zurück',bn_next:'Weiter',bn_menu:'Menü'},
+  zh:{bn_home:'首页',bn_prev:'上页',bn_next:'下页',bn_menu:'菜单'},
+  ja:{bn_home:'ホーム',bn_prev:'前へ',bn_next:'次へ',bn_menu:'メニュー'},
+  pt:{bn_home:'Início',bn_prev:'Ant',bn_next:'Próx',bn_menu:'Menu'},
+  ru:{bn_home:'Главная',bn_prev:'Назад',bn_next:'Далее',bn_menu:'Меню'},
+  it:{bn_home:'Home',bn_prev:'Prec',bn_next:'Succ',bn_menu:'Menu'},
+  ko:{bn_home:'홈',bn_prev:'이전',bn_next:'다음',bn_menu:'메뉴'},
+  ar:{bn_home:'الرئيسية',bn_prev:'السابق',bn_next:'التالي',bn_menu:'القائمة'}
+};
+(function() {
+  var codes = Object.keys(BN);
+  for (var i=0; i<codes.length; i++) {
+    var code = codes[i];
+    var keys = Object.keys(BN[code]);
+    if (LANGS[code]) {
+      for (var j=0; j<keys.length; j++) {
+        LANGS[code][keys[j]] = BN[code][keys[j]];
+      }
+    }
+  }
+}());
+
 </script>
 
 <script>
 // ── HERO TYPING ───────────────────────────────
 function heroType() {
-  const el = document.getElementById('hterm');
+  var el = ge('hterm');
   if (!el) return;
-  const lines = [
+  var lines = [
     { h: '<span style="color:var(--txt3);font-style:italic">// C++23 — zero-cost abstractions, maximum control</span>', d: 0 },
     { h: '<span style="color:#b8bb26">#include &lt;iostream&gt;</span>', d: 280 },
     { h: '<span style="color:#b8bb26">#include &lt;ranges&gt;</span>', d: 480 },
@@ -4230,12 +5789,12 @@ function heroType() {
     { h: '}', d: 1960 }
   ];
   lines.forEach(({ h, d }) => setTimeout(() => {
-    const s = document.createElement('div');
+    var s = document.createElement('div');
     s.innerHTML = h || '&nbsp;';
     el.appendChild(s);
   }, d));
   setTimeout(() => {
-    const d2 = document.createElement('div');
+    var d2 = document.createElement('div');
     d2.style.cssText = 'margin-top:8px;border-top:1px solid var(--border);padding-top:8px';
     d2.innerHTML = '<span style="color:var(--txt3)">// Output: </span><span style="color:var(--grn)">1 4 9 16 25</span><span class="tcur"></span>';
     el.appendChild(d2);
@@ -4243,7 +5802,7 @@ function heroType() {
 }
 
 // ── TYPE INSPECTOR ────────────────────────────
-const TE = {
+var TE = {
   'int':    { sz:'4 bytes', mn:'-2,147,483,648', mx:'2,147,483,647', fmt:'%d', suf:'—', cat:'Integer', note:'Default integer type. Guaranteed ≥16 bits but virtually always 32-bit on modern platforms.', code:'int x = 42;\nint y{-100};\nauto z = x + y; // z == -58' },
   'long long':{ sz:'8 bytes', mn:'-9,223,372,036,854,775,808', mx:'9,223,372,036,854,775,807', fmt:'%lld', suf:'LL', cat:'Integer', note:'64-bit signed integer. Use when int may overflow. Suffix literal with LL.', code:"long long n = 9'000'000'000LL;\nstd::cout << n;" },
   'float':  { sz:'4 bytes', mn:'≈ -3.4×10³⁸', mx:'≈ 3.4×10³⁸', fmt:'%f', suf:'f', cat:'Float', note:'~7 significant decimal digits. IEEE 754 single precision. Always suffix with f.', code:'float f = 3.14f;\nfloat g = 2.71f;\nstd::cout << f + g; // 5.85' },
@@ -4257,7 +5816,7 @@ const TE = {
 };
 
 function initTE() {
-  const el = document.getElementById('te');
+  var el = ge('te');
   if (!el) return;
   el.innerHTML = Object.keys(TE).map(k =>
     `<button class="te-b${k==='int'?' on':''}" onclick="showTE('${k}')">${k}</button>`
@@ -4267,26 +5826,26 @@ function initTE() {
 
 function showTE(t) {
   document.querySelectorAll('.te-b').forEach(b => b.classList.toggle('on', b.textContent === t));
-  const d = TE[t]; if (!d) return;
-  document.getElementById('te-sz').textContent  = d.sz;
-  document.getElementById('te-mn').textContent  = d.mn;
-  document.getElementById('te-mx').textContent  = d.mx;
-  document.getElementById('te-fmt').textContent = d.fmt;
-  document.getElementById('te-suf').textContent = d.suf;
-  document.getElementById('te-cat').textContent = d.cat;
-  document.getElementById('te-note').textContent = d.note;
-  const el = document.getElementById('te-code');
+  var d = TE[t]; if (!d) return;
+  ge('te-sz').textContent  = d.sz;
+  ge('te-mn').textContent  = d.mn;
+  ge('te-mx').textContent  = d.mx;
+  ge('te-fmt').textContent = d.fmt;
+  ge('te-suf').textContent = d.suf;
+  ge('te-cat').textContent = d.cat;
+  ge('te-note').textContent = d.note;
+  var el = ge('te-code');
   el.textContent = d.code; rehl(el);
 }
 
 // ── VARIABLE BUILDER ─────────────────────────
 function doVar() {
-  const st = document.getElementById('vst')?.value || '';
-  const ty = document.getElementById('vty')?.value || 'int';
-  const na = document.getElementById('vna')?.value || 'x';
-  const el = document.getElementById('vcode'); if (!el) return;
-  let defVal = { 'int':'0', 'double':'0.0', 'std::string':'"hello"', 'bool':'false', 'auto':'42', 'char':"'A'", 'std::vector<int>':'{1,2,3}' }[ty] || '0';
-  let line = `${st ? st + ' ' : ''}${ty} ${na} = ${defVal};`;
+  var st = gv('vst') || '';
+  var ty = gv('vty') || 'int';
+  var na = gv('vna') || 'x';
+  var el = ge('vcode'); if (!el) return;
+  var defVal = { 'int':'0', 'double':'0.0', 'std::string':'"hello"', 'bool':'false', 'auto':'42', 'char':"'A'", 'std::vector<int>':'{1,2,3}' }[ty] || '0';
+  var line = `${st ? st + ' ' : ''}${ty} ${na} = ${defVal};`;
   if (st === 'constexpr' && ty === 'std::string') line = `// constexpr std::string only in C++20+\nconstexpr std::string_view ${na} = "hello";`;
   if (st === 'extern') line = `// Declaration (in header):\nextern ${ty} ${na};\n// Definition (in .cpp):\n${ty} ${na} = ${defVal};`;
   el.textContent = line; rehl(el);
@@ -4294,15 +5853,15 @@ function doVar() {
 
 // ── EXPRESSION CALCULATOR ────────────────────
 function doExpr() {
-  const a = parseInt(document.getElementById('oa')?.value) || 0;
-  const b = parseInt(document.getElementById('ob')?.value) || 0;
-  const op = document.getElementById('oop')?.value || '+';
-  let res, note = '';
-  const toBin = n => { if (n < 0) return '(negative)'; const s = (n >>> 0).toString(2); return s.padStart(Math.max(8, s.length), '0'); };
+  var a = parseInt(gv('oa')) || 0;
+  var b = parseInt(gv('ob')) || 0;
+  var op = gv('oop') || '+';
+  var res, note = '';
+  var toBin = n => { if (n < 0) return '(negative)'; var s = (n >>> 0).toString(2); return s.padStart(Math.max(8, s.length), '0'); };
   if ((op === '/' || op === '%') && b === 0) {
-    document.getElementById('ores1').innerHTML = '<span class="oe">Division by zero — undefined behavior!</span>';
-    document.getElementById('ores2').innerHTML = '<span class="od">N/A</span>';
-    document.getElementById('ocode').textContent = `int a=${a}, b=${b};\nint r = a ${op} b; // UB!`; rehl(document.getElementById('ocode'));
+    ge('ores1').innerHTML = '<span class="oe">Division by zero — undefined behavior!</span>';
+    ge('ores2').innerHTML = '<span class="od">N/A</span>';
+    ge('ocode').textContent = `int a=${a}, b=${b};\nint r = a ${op} b; // UB!`; rehl(ge('ocode'));
     return;
   }
   switch (op) {
@@ -4315,9 +5874,9 @@ function doExpr() {
     case '>>': res = (a >> b); note = `= ${a} ÷ 2^${b}`; break;
     default: res = 0;
   }
-  const el1 = document.getElementById('ores1');
-  const el2 = document.getElementById('ores2');
-  const elc = document.getElementById('ocode');
+  var el1 = ge('ores1');
+  var el2 = ge('ores2');
+  var elc = ge('ocode');
   el1.innerHTML = `<span class="od">int: ${a} ${op} ${b} = </span><span class="ol">${res}</span>${note ? ' <span class="od">// ' + note + '</span>' : ''}`;
   if (['&','|','^','<<','>>'].includes(op)) {
     el2.innerHTML = `<span class="od">${toBin(a)}</span>\n<span class="od">${toBin(b)}</span>\n<span style="color:var(--border)">──────────</span>\n<span class="ol">${toBin(res)}</span>`;
@@ -4330,8 +5889,8 @@ function doExpr() {
 
 // ── PRECEDENCE TABLE ─────────────────────────
 function initPrec() {
-  const el = document.getElementById('prectbl'); if (!el) return;
-  const rows = [
+  var el = ge('prectbl'); if (!el) return;
+  var rows = [
     { lvl:1, ops:['::'], desc:'Scope resolution', assoc:'L→R' },
     { lvl:2, ops:['a++','a--','a()','a[]','a.','a->','typeid','static_cast','dynamic_cast','const_cast','reinterpret_cast'], desc:'Postfix / call', assoc:'L→R' },
     { lvl:3, ops:['++a','--a','+a','-a','!','~','*','&','sizeof','alignof','co_await','new','delete'], desc:'Unary prefix', assoc:'R→L' },
@@ -4361,17 +5920,17 @@ function initPrec() {
 
 // ── LOOP VISUALIZER ──────────────────────────
 function doLoop() {
-  const s = parseInt(document.getElementById('ls')?.value) || 0;
-  const e = parseInt(document.getElementById('le')?.value);
-  const p = parseInt(document.getElementById('lp')?.value) || 1;
-  const lc = document.getElementById('lcode'); const lo = document.getElementById('lout');
+  var s = parseInt(gv('ls')) || 0;
+  var e = parseInt(gv('le'));
+  var p = parseInt(gv('lp')) || 1;
+  var lc = ge('lcode'); var lo = ge('lout');
   if (!lc || !lo) return;
   if (p === 0) { lo.innerHTML = '<span class="oe">Step cannot be zero</span>'; return; }
-  const cmp = p > 0 ? '<' : '>';
-  const stp = p === 1 ? '++i' : p === -1 ? '--i' : `i += ${p}`;
+  var cmp = p > 0 ? '<' : '>';
+  var stp = p === 1 ? '++i' : p === -1 ? '--i' : `i += ${p}`;
   lc.textContent = `for (int i = ${s}; i ${cmp} ${e}; ${stp}) {\n    std::cout << i << " ";\n}`;
   rehl(lc);
-  const iters = []; let i = s, n = 0;
+  var iters = []; var i = s, n = 0;
   while (p > 0 ? i < e : i > e) { iters.push(i); i += p; if (++n >= 50) { iters.push('...'); break; } }
   lo.innerHTML = iters.length === 0
     ? '<span class="od">// loop body never executes</span>'
@@ -4379,58 +5938,58 @@ function doLoop() {
 }
 
 function doFizz() {
-  const n = Math.min(parseInt(document.getElementById('fn')?.value) || 20, 100);
-  const rows = [];
-  for (let i = 1; i <= n; i++) {
+  var n = Math.min(parseInt(gv('fn')) || 20, 100);
+  var rows = [];
+  for (var i = 1; i <= n; i++) {
     if (i % 15 === 0) rows.push(`<span style="color:var(--pur)">FizzBuzz</span>`);
     else if (i % 3 === 0) rows.push(`<span class="oa">Fizz</span>`);
     else if (i % 5 === 0) rows.push(`<span class="ow">Buzz</span>`);
     else rows.push(`<span class="od">${i}</span>`);
   }
-  const el = document.getElementById('fout'); if (el) el.innerHTML = rows.join('  ');
+  var el = ge('fout'); if (el) el.innerHTML = rows.join('  ');
 }
 
 // ── FUNCTION SIMULATOR ───────────────────────
 function doFn() {
-  const b = parseFloat(document.getElementById('pb')?.value) || 0;
-  const e = parseInt(document.getElementById('pe')?.value);
-  const ok = !isNaN(e) && e >= 0 && e <= 30;
-  const r = ok ? Math.pow(b, e) : NaN;
-  const el = document.getElementById('fncode'); if (!el) return;
+  var b = parseFloat(gv('pb')) || 0;
+  var e = parseInt(gv('pe'));
+  var ok = !isNaN(e) && e >= 0 && e <= 30;
+  var r = ok ? Math.pow(b, e) : NaN;
+  var el = ge('fncode'); if (!el) return;
   el.textContent = `double power(double base, int exp = 2) {\n    double r = 1.0;\n    for (int i = 0; i < exp; ++i) r *= base;\n    return r;\n}\n\npower(${b}, ${ok?e:'?'}); // → ${isNaN(r)?'?':r}`;
   rehl(el);
-  const res = document.getElementById('fnres');
+  var res = ge('fnres');
   if (res) res.innerHTML = isNaN(r)
     ? '<span class="oe">invalid input</span>'
     : `<span class="od">power(</span><span class="oa">${b}</span><span class="od">, </span><span class="oa">${e}</span><span class="od">) = </span><span class="ol">${r}</span>`;
 }
 
-const OVL = {
+var OVL = {
   'int':    { call:'describe(42)',        out:'Overload called: describe(int)\nResult: "Integer: 42"',    code:'void describe(int x) {\n    std::cout << "Integer: " << x;\n}' },
   'double': { call:'describe(3.14)',      out:'Overload called: describe(double)\nResult: "Double: 3.14"', code:'void describe(double x) {\n    std::cout << "Double: " << x;\n}' },
-  'string': { call:'describe("hello")',   out:'Overload called: describe(const string&)\nResult: "String[5]: hello"', code:'void describe(const std::string& s) {\n    std::cout << "String[" << s.size() << "]: " << s;\n}' }
+  'string': { call:'describe("hello")',   out:'Overload called: describe(var string&)\nResult: "String[5]: hello"', code:'void describe(var std::string& s) {\n    std::cout << "String[" << s.size() << "]: " << s;\n}' }
 };
 function showOvl(t) {
   document.querySelectorAll('#ovl-int,#ovl-double,#ovl-string').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('ovl-' + t); if (btn) btn.classList.add('active');
-  const d = OVL[t]; if (!d) return;
-  const el = document.getElementById('ovlout');
+  var btn = document.getElementById('ovl-' + t); if (btn) btn.classList.add('active');
+  var d = OVL[t]; if (!d) return;
+  var el = ge('ovlout');
   if (el) el.innerHTML = `<span class="od">// Call: ${d.call}</span>\n<span class="ol">${d.out}</span>`;
 }
 
 // ── MEMORY VISUALIZER ────────────────────────
-let memRows = []; let memAddr = 0x7FFD1000;
-const memSz = { 'int':4, 'double':8, 'char':1, 'bool':1, 'int*':8 };
+var memRows = []; var memAddr = 0x7FFD1000;
+var memSz = { 'int':4, 'double':8, 'char':1, 'bool':1, 'int*':8 };
 function initMem() {
   memRows = [{ addr:'0x7FFD1000', type:'int', name:'x', val:'42', sz:4 }];
   memAddr = 0x7FFD1004; renderMem();
 }
 function renderMem() {
-  const tb = document.getElementById('mtbd'); if (!tb) return;
+  var tb = ge('mtbd'); if (!tb) return;
   tb.innerHTML = memRows.length === 0
     ? '<tr><td colspan="5" style="color:var(--txt3);text-align:center;padding:14px">Stack frame is empty</td></tr>'
     : memRows.map(r => `<tr><td class="ma">${r.addr}</td><td class="mty">${r.type}</td><td class="mn2">${r.name}</td><td class="mv">${r.val}</td><td style="color:var(--txt3)">${r.sz}B</td></tr>`).join('');
-  const el = document.getElementById('mcode'); if (!el) return;
+  var el = ge('mcode'); if (!el) return;
   el.textContent = memRows.length === 0 ? '// empty frame'
     : memRows.map(r => {
         if (r.type==='char') return `char ${r.name} = '${r.val}';   // ${r.addr}`;
@@ -4441,11 +6000,11 @@ function renderMem() {
   rehl(el);
 }
 function addMem() {
-  const t = document.getElementById('mty')?.value || 'int';
-  const n = document.getElementById('mna')?.value || 'var';
-  const v = document.getElementById('mva')?.value || '0';
-  const sz = memSz[t] || 4;
-  const a = '0x' + memAddr.toString(16).toUpperCase().padStart(8, '0');
+  var t = gv('mty') || 'int';
+  var n = gv('mna') || 'var';
+  var v = gv('mva') || '0';
+  var sz = memSz[t] || 4;
+  var a = '0x' + memAddr.toString(16).toUpperCase().padStart(8, '0');
   memRows.push({ addr: a, type: t, name: n, val: v, sz });
   memAddr += sz; renderMem();
 }
@@ -4455,34 +6014,34 @@ function clrMem() { memRows = []; memAddr = 0x7FFD1000; renderMem(); }
 <script>
 // ── STRUCT BUILDER ───────────────────────────
 function initStruct() {
-  const c = document.getElementById('sfields'); if (!c) return;
+  var c = ge('sfields'); if (!c) return;
   c.innerHTML = '';
-  [['std::string','name'],['int','age'],['double','score']].forEach(([t,n]) => {
-    const row = mkSF(t, n); c.appendChild(row);
+  [['std::string','name'],['int','age'],['double','score']].forEach(function(pair) {
+    var row = mkSF(pair[0], pair[1]); c.appendChild(row);
   });
   doStruct();
 }
-function mkSF(t = 'int', n = 'field') {
-  const row = document.createElement('div');
+function mkSF(t, n) { t=t||'int'; n=n||'field';
+  var row = document.createElement('div');
   row.style.cssText = 'display:flex;gap:7px;align-items:center;margin-bottom:7px';
   row.innerHTML = `<select style="width:130px;min-width:130px;background:var(--raised);border:1px solid var(--border);color:var(--txt);padding:5px 8px;border-radius:var(--r);font-family:var(--mono);font-size:12px;outline:none" onchange="doStruct()"><option${t==='std::string'?' selected':''}>std::string</option><option${t==='int'?' selected':''}>int</option><option${t==='double'?' selected':''}>double</option><option${t==='bool'?' selected':''}>bool</option><option${t==='char'?' selected':''}>char</option><option${t==='float'?' selected':''}>float</option></select><input type="text" value="${n}" style="width:100px;min-width:100px;background:var(--raised);border:1px solid var(--border);color:var(--txt);padding:5px 8px;border-radius:var(--r);font-family:var(--mono);font-size:12px;outline:none" oninput="doStruct()"><button onclick="this.closest('div').remove();doStruct()" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:2px 4px;line-height:1">✕</button>`;
   return row;
 }
-function addSF() { const c = document.getElementById('sfields'); if (c) { c.appendChild(mkSF()); doStruct(); } }
+function addSF() { var c = ge('sfields'); if (c) { c.appendChild(mkSF()); doStruct(); } }
 function doStruct() {
-  const nm = document.getElementById('sna')?.value || 'MyStruct';
-  const rows = document.querySelectorAll('#sfields > div');
-  const fields = [];
+  var nm = gv('sna') || 'MyStruct';
+  var rows = document.querySelectorAll('#sfields > div');
+  var fields = [];
   rows.forEach(r => {
-    const sel = r.querySelector('select'); const inp = r.querySelector('input[type=text]');
+    var sel = r.querySelector('select'); var inp = r.querySelector('input[type=text]');
     if (sel && inp) fields.push({ t: sel.value, n: inp.value || 'field' });
   });
-  const el = document.getElementById('scode'); if (!el) return;
+  var el = ge('scode'); if (!el) return;
   if (!fields.length) { el.textContent = `struct ${nm} {\n    // add fields above\n};`; rehl(el); return; }
-  const fl = fields.map(f => `    ${f.t} ${f.n};`).join('\n');
-  const ctor_args = fields.map(f => `${f.t} ${f.n}`).join(', ');
-  const ctor_init = fields.map(f => `${f.n}{${f.n}}`).join(', ');
-  const eg_vals = fields.map(f => {
+  var fl = fields.map(f => `    ${f.t} ${f.n};`).join('\n');
+  var ctor_args = fields.map(f => `${f.t} ${f.n}`).join(', ');
+  var ctor_init = fields.map(f => `${f.n}{${f.n}}`).join(', ');
+  var eg_vals = fields.map(f => {
     if (f.t==='std::string') return '"value"';
     if (f.t==='bool') return 'true';
     if (f.t==='char') return "'A'";
@@ -4493,34 +6052,34 @@ function doStruct() {
 }
 
 // ── SHAPE POLYMORPHISM ───────────────────────
-let curShp = 'Circle';
+var curShp = 'Circle';
 function selShp(s) {
   curShp = s;
   ['Circle','Rect','Triangle'].forEach(n => {
-    const el = document.getElementById('n' + n); if (el) el.classList.toggle('on', n === s);
+    var el = document.getElementById('n' + n); if (el) el.classList.toggle('on', n === s);
   });
-  const p1l = document.getElementById('sp1l'); const p2l = document.getElementById('sp2l');
+  var p1l = ge('sp1l'); var p2l = ge('sp2l');
   if (s === 'Circle')   { if(p1l) p1l.textContent='Radius'; if(p2l) p2l.textContent='(n/a)'; }
   else if (s === 'Rect'){ if(p1l) p1l.textContent='Width';  if(p2l) p2l.textContent='Height'; }
   else                  { if(p1l) p1l.textContent='Base';   if(p2l) p2l.textContent='Height'; }
   doShp();
 }
 function doShp() {
-  const p1 = parseFloat(document.getElementById('sp1')?.value) || 5;
-  const p2 = parseFloat(document.getElementById('sp2')?.value) || 4;
-  const el = document.getElementById('shpout'); if (!el) return;
+  var p1 = parseFloat(gv('sp1')) || 5;
+  var p2 = parseFloat(gv('sp2')) || 4;
+  var el = ge('shpout'); if (!el) return;
   if (curShp === 'Shape') {
     el.innerHTML = '<span class="oe">// Cannot instantiate abstract class!\n// Shape s;  ← compile error\n// Shape is abstract because area() is pure virtual (= 0)</span>'; return;
   }
-  let area, ctor, formula;
-  if (curShp === 'Circle')   { area = Math.PI*p1*p1; ctor=`Circle c{${p1}};`; formula=`π × ${p1}² = ${area.toFixed(5)}`; }
-  else if (curShp === 'Rect'){ area = p1*p2;          ctor=`Rect r{${p1}, ${p2}};`; formula=`${p1} × ${p2} = ${area.toFixed(5)}`; }
-  else                       { area = 0.5*p1*p2;      ctor=`Triangle t{${p1}, ${p2}};`; formula=`½ × ${p1} × ${p2} = ${area.toFixed(5)}`; }
+  var area, ctor, formula;
+  if (curShp === 'Circle')   { area = Math.PI*p1*p1; ctor='Circle c{'+p1+'};'; formula='π × '+p1+'² = '+area.toFixed(5); }
+  else if (curShp === 'Rect'){ area = p1*p2;          ctor='Rect r{'+p1+', '+p2+'};'; formula=p1+' × '+p2+' = '+area.toFixed(5); }
+  else                       { area = 0.5*p1*p2;      ctor='Triangle t{'+p1+', '+p2+'};'; formula='½ × '+p1+' × '+p2+' = '+area.toFixed(5); }
   el.innerHTML = `<span class="od">// ${ctor}\n// Virtual call → dispatched to ${curShp}::area() at runtime</span>\n<span class="ol">${curShp}::area() = ${formula}</span>\n<span class="od">// Same interface (Shape&), different behavior — polymorphism!</span>`;
 }
 
 // ── TEMPLATE INSTANTIATION ───────────────────
-const TMPL = {
+var TMPL = {
   'int':    { code:`// Compiler generates this specialization for T=int:\nint maxVal(int a, int b) {\n    return (a > b) ? a : b;\n}`, usage:'maxVal(3, 7)    → 7\nmaxVal(-5, 2)  → 2\nmaxVal(0, 0)   → 0' },
   'double': { code:`// Compiler generates this for T=double:\ndouble maxVal(double a, double b) {\n    return (a > b) ? a : b;\n}`, usage:'maxVal(3.14, 2.71) → 3.14\nmaxVal(0.1, 0.2)   → 0.2' },
   'char':   { code:`// Compiler generates this for T=char:\nchar maxVal(char a, char b) {\n    return (a > b) ? a : b;\n}`, usage:"maxVal('a', 'z') → 'z'\nmaxVal('A', 'B') → 'B'  // ASCII compare" },
@@ -4529,35 +6088,43 @@ const TMPL = {
 };
 function showTmpl(t) {
   document.querySelectorAll('#tmbtns .bs').forEach(b => b.classList.toggle('on', b.textContent === t));
-  const d = TMPL[t]; if (!d) return;
-  const el = document.getElementById('tmcode'); if (el) { el.textContent = d.code; rehl(el); }
-  const eu = document.getElementById('tmusage');
+  var d = TMPL[t]; if (!d) return;
+  var el = ge('tmcode'); if (el) { el.textContent = d.code; rehl(el); }
+  var eu = ge('tmusage');
   if (eu) eu.innerHTML = d.usage.split('\n').map(l => l.includes('→')
     ? `<span class="od">${l.split('→')[0]}→ </span><span class="ol">${l.split('→')[1]}</span>`
     : `<span class="od">${l}</span>`).join('\n');
 }
 
-let stData = []; let stType = 'int';
-function rstSt() { stData = []; stType = document.getElementById('stty')?.value||'int'; renderSt(); }
+var stData = []; var stType = 'int';
+function rstSt() { stData = []; stType = gv('stty')||'int'; renderSt(); }
 function stPush() {
-  const v = document.getElementById('stva')?.value || '0';
+  var v = gv('stva') || '0';
   if (stData.length >= 8) return;
   stData.push(v); renderSt();
 }
 function stPop()  { if (stData.length) { stData.pop(); renderSt(); } }
 function renderSt() {
-  const t = document.getElementById('stty')?.value || 'int';
-  const el = document.getElementById('stdisp'); if (!el) return;
-  if (!stData.length) { el.innerHTML = `<span class="od">Stack&lt;${t}&gt; — empty\n.empty() == true\n.size()  == 0</span>`; return; }
-  const lines = [...stData].reverse().map((v, i) =>
-    i === 0 ? `<span class="ol">▶ top():  ${v}</span>` : `<span class="od">  [${stData.length-1-i}]:   ${v}</span>`
-  );
-  el.innerHTML = lines.join('\n') + `\n<span class="od">// size = ${stData.length}</span>`;
+  var t = gv('stty') || 'int';
+  var el = ge('stdisp'); if (!el) return;
+  if (!stData.length) {
+    el.innerHTML = '<span class="od">Stack&lt;'+t+'&gt; — empty<br>.empty() == true<br>.size()  == 0</span>';
+    return;
+  }
+  var rev = stData.slice().reverse();
+  var parts = [];
+  for (var ri=0; ri<rev.length; ri++) {
+    var rv = rev[ri];
+    if (ri===0) parts.push('<span class="ol">▶ top():  '+rv+'</span>');
+    else parts.push('<span class="od">  ['+(stData.length-1-ri)+']: '+rv+'</span>');
+  }
+  parts.push('<span class="od">// size = '+stData.length+'</span>');
+  el.innerHTML = parts.join('\n');
 }
 
 // ── LAMBDA LAB ───────────────────────────────
-const BASE = [1, 2, 3, 4, 5, 6, 7, 8];
-const LM = {
+var BASE = [1, 2, 3, 4, 5, 6, 7, 8];
+var LM = {
   'sq':  { code:`auto op = [](int x){ return x * x; };\nstd::transform(v.begin(), v.end(),\n               result.begin(), op);`, fn: a => a.map(x=>x*x), lbl:'transform (square)' },
   'dbl': { code:`auto op = [](int x){ return x * 2; };\nstd::transform(v.begin(), v.end(),\n               result.begin(), op);`, fn: a => a.map(x=>x*2), lbl:'transform (double)' },
   'neg': { code:`auto op = [](int x){ return -x; };\nstd::transform(v.begin(), v.end(),\n               result.begin(), op);`, fn: a => a.map(x=>-x), lbl:'transform (negate)' },
@@ -4567,75 +6134,88 @@ const LM = {
 };
 function doLm(k) {
   document.querySelectorAll('#lmbtns .bs').forEach(b => b.classList.remove('active'));
-  const d = LM[k]; if (!d) return;
-  const el = document.getElementById('lmcode');
+  var d = LM[k]; if (!d) return;
+  var el = ge('lmcode');
   if (el) { el.textContent = `std::vector<int> v = {1,2,3,4,5,6,7,8};\n\n${d.code}`; rehl(el); }
-  const res = d.fn(BASE);
-  const er = document.getElementById('lmres');
+  var res = d.fn(BASE);
+  var er = ge('lmres');
   if (er) er.innerHTML = `<span class="od">Input:   [${BASE.join(', ')}]</span>\n<span class="od">Op:      ${d.lbl}</span>\n<span class="ol">Result:  [${res.join(', ')}]</span>`;
 }
 
 // ── VECTOR LAB ───────────────────────────────
-let vData = []; let vLog = [];
+var vData = []; var vLog = [];
 function renderVec() {
-  const el = document.getElementById('vviz'); if (!el) return;
+  var el = ge('vviz'); if (!el) return;
   if (!vData.length) { el.innerHTML = '<span class="vbk">[</span><span class="ve">empty</span><span class="vbk">]</span>'; return; }
-  el.innerHTML = `<span class="vbk">[</span>${vData.map((v,i)=>`<div class="vc"><span class="vv">${v}</span><span class="vi">[${i}]</span></div>`).join('')}<span class="vbk">]</span>`;
+  var vcells = '';
+  for (var vi=0; vi<vData.length; vi++) {
+    vcells += '<div class="vc"><span class="vv">'+vData[vi]+'</span><span class="vi">['+vi+']</span></div>';
+  }
+  el.innerHTML = '<span class="vbk">[</span>' + vcells + '<span class="vbk">]</span>';
 }
 function addVLog(m) {
   vLog.push(m); if (vLog.length > 10) vLog.shift();
-  const el = document.getElementById('vlog');
+  var el = ge('vlog');
   if (el) el.innerHTML = vLog.map((l,i) => `<span style="color:${i===vLog.length-1?'var(--grn)':'var(--txt3)'}">${l}</span>`).join('\n');
 }
 function vPush() {
-  const v = parseFloat(document.getElementById('vval')?.value);
+  var v = parseFloat(gv('vval'));
   if (isNaN(v)) return;
   if (vData.length >= 14) { addVLog('// demo limit (14) reached'); return; }
   vData.push(v); renderVec(); addVLog(`v.push_back(${v});  // size=${vData.length}`);
 }
 function vPop() {
   if (!vData.length) { addVLog('// pop_back() on empty vector → UB!'); return; }
-  const r = vData.pop(); renderVec(); addVLog(`v.pop_back();  // removed ${r}, size=${vData.length}`);
+  var r = vData.pop(); renderVec(); addVLog(`v.pop_back();  // removed ${r}, size=${vData.length}`);
 }
 function vClr() { vData = []; renderVec(); addVLog('v.clear();  // size=0'); }
 
 // ── SORT VISUALIZER ──────────────────────────
-let sData = [64, 34, 25, 12, 22, 11, 90, 47, 58, 33]; let sSorted = false;
+var sData = [64, 34, 25, 12, 22, 11, 90, 47, 58, 33]; var sSorted = false;
 function renderSort() {
-  const el = document.getElementById('sviz'); if (!el) return;
-  const mx = Math.max(...sData);
+  var el = ge('sviz'); if (!el) return;
+  var mx = Math.max(...sData);
   el.innerHTML = sData.map(v => {
-    const h = Math.max(4, Math.round((v/mx)*86));
+    var h = Math.max(4, Math.round((v/mx)*86));
     return `<div class="sb${sSorted?' ok':''}" style="height:${h}%"><span>${v}</span></div>`;
   }).join('');
-  const sa = document.getElementById('sarr');
+  var sa = ge('sarr');
   if (sa) sa.innerHTML = `<span class="od">// [${sData.join(', ')}]</span>\n<span class="od">// min=${Math.min(...sData)}  max=${Math.max(...sData)}  size=${sData.length}</span>`;
 }
-function doSort(dir) { sData = [...sData].sort((a,b) => dir*(a-b)); sSorted = dir===1; renderSort(); }
+function doSort(dir) { sData = sData.slice().sort(function(a,b){return dir*(a-b);}); sSorted = dir===1; renderSort(); }
 function doShuffle() {
-  for (let i = sData.length-1; i > 0; i--) {
-    const j = Math.floor(Math.random()*(i+1)); [sData[i],sData[j]] = [sData[j],sData[i]];
+  for (var i = sData.length-1; i > 0; i--) {
+    var j = Math.floor(Math.random()*(i+1)); [sData[i],sData[j]] = [sData[j],sData[i]];
   }
   sSorted = false; renderSort();
 }
 
 // ── SMART PTR VISUALIZER ──────────────────────
-let spCnt = 1;
+var spCnt = 1;
 function spAdd() { spCnt = Math.min(spCnt+1, 5); spRender(); }
 function spRm()  { spCnt = Math.max(spCnt-1, 0); spRender(); }
 function spRender() {
-  const el = document.getElementById('spviz'); if (!el) return;
-  if (spCnt === 0) { el.innerHTML = '<span class="ow">// use_count() == 0\n// ─── managed object DESTROYED, memory freed ───</span>'; return; }
-  const ptrs = Array.from({length:spCnt}, (_,i) => `<span class="oa">shared_ptr s${i+1}</span>`).join('\n');
-  el.innerHTML = `${ptrs}\n<span class="od">───── all point to ─────▶ </span><span class="ol">[resource]</span>\n<span class="od">// use_count() = ${spCnt}${spCnt===1?' ← will free on next reset':'  ← ${spCnt} owners'}</span>`.replace("'${spCnt} owners'",`'${spCnt} owners'`);
-  el.innerHTML = `${ptrs}\n<span class="od">───── all point to ─────▶ </span><span class="ol">[resource]</span>\n<span class="od">// use_count() = ${spCnt}${spCnt===1?' ← last owner, will free on reset':''}</span>`;
+  var el = ge('spviz'); if (!el) return;
+  if (spCnt === 0) {
+    el.innerHTML = '<span class="ow">// use_count() == 0\n// managed object DESTROYED, memory freed</span>';
+    return;
+  }
+  var ptrs_parts = [];
+  for (var pi=0; pi<spCnt; pi++) {
+    ptrs_parts.push('<span class="oa">shared_ptr s'+(pi+1)+'</span>');
+  }
+  var ptrs = ptrs_parts.join('\n');
+  var note = spCnt===1 ? ' ← last owner, will free on reset' : '';
+  el.innerHTML = ptrs + '\n<span class="od">───── all point to ─────▶ </span>'
+    + '<span class="ol">[resource]</span>\n'
+    + '<span class="od">// use_count() = '+spCnt+note+'</span>';
 }
 
 // ── THREAD TIMELINE ──────────────────────────
 function initThread() {
-  const el = document.getElementById('thviz'); if (!el) return;
-  const W = 100; // percent width
-  const threads = [
+  var el = ge('thviz'); if (!el) return;
+  var W = 100; // percent width
+  var threads = [
     { name:'Thread 1', segs:[{c:'th-run',s:0,w:20},{c:'th-bk',s:20,w:15},{c:'th-run',s:35,w:30},{c:'th-id',s:65,w:35}] },
     { name:'Thread 2', segs:[{c:'th-id',s:0,w:15},{c:'th-w',s:15,w:20},{c:'th-run',s:35,w:40},{c:'th-id',s:75,w:25}] },
     { name:'Thread 3', segs:[{c:'th-id',s:0,w:35},{c:'th-run',s:35,w:20},{c:'th-w',s:55,w:15},{c:'th-run',s:70,w:20},{c:'th-id',s:90,w:10}] }
@@ -4651,8 +6231,8 @@ function initThread() {
 
 // ── KEYWORD GRID ─────────────────────────────
 function initKwGrid() {
-  const el = document.getElementById('kwgrid'); if (!el) return;
-  const kws = [
+  var el = ge('kwgrid'); if (!el) return;
+  var kws = [
     // Control flow (blue)
     {w:'if',c:'kc'},{w:'else',c:'kc'},{w:'switch',c:'kc'},{w:'case',c:'kc'},{w:'default',c:'kc'},
     {w:'for',c:'kc'},{w:'while',c:'kc'},{w:'do',c:'kc'},{w:'break',c:'kc'},{w:'continue',c:'kc'},
@@ -4703,43 +6283,280 @@ function rehl(el) {
 }
 
 // ── INIT ──────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  hljs.configure({ languages: ['cpp'] });
-  hljs.highlightAll();
+document.addEventListener('DOMContentLoaded', function() {
+  hljs.configure({languages:['cpp']});
 
-  // restore preferences
-  const savedTheme = localStorage.getItem('cpp_theme') || 'dark';
-  const savedLang  = localStorage.getItem('cpp_lang')  || 'en';
+  // Restore theme
+  var savedTheme = 'dark';
+  try { var t=localStorage.getItem('cpp_theme'); if(t) savedTheme=t; } catch(e){}
   setTheme(savedTheme);
-  document.getElementById('lsel').value = savedLang;
+
+  // Restore language
+  var savedLang = 'en';
+  try { var l=localStorage.getItem('cpp_lang'); if(l) savedLang=l; } catch(e){}
+  var lsel = ge('lsel');
+  if (lsel) lsel.value = savedLang;
   if (savedLang !== 'en') setLang(savedLang);
 
-  // nav + sidebar
   setupNav();
 
-  // interactive inits
-  heroType();
-  initTE();
-  initPrec();
-  initStruct();
-  initMem();
-  renderVec();
-  renderSort();
-  initThread();
-  initKwGrid();
-  stType = 'int'; renderSt();
+  // Always start on home page (sandbox restricts location API)
+  var startPage = 'home';
 
-  // run initial demos
-  doVar();
-  doExpr();
-  doLoop();
-  doFizz();
-  doFn();
-  showTmpl('int');
-  doLm('sq');
-  selShp('Circle');
-  spRender();
+  // Hide all pages, show start page
+  qaEach('.page', function(p){ p.classList.remove('active'); });
+  var startId = startPage === 'home' ? 'page-home' : ('page-' + startPage);
+  var startEl = ge(startId);
+  if (startEl) {
+    startEl.classList.add('active');
+    currentPage = startPage;
+    var cels = startEl.querySelectorAll('code.language-cpp');
+    for (var j=0; j<cels.length; j++) hljs.highlightElement(cels[j]);
+  }
+  updateProgress(startPage);
+  updateNavHL(startPage);
+  updateBotNav(startPage);
+
+  // Interactive demos
+  heroType();
+  initTE(); initPrec(); initStruct(); initMem();
+  renderVec(); renderSort(); initThread(); initKwGrid();
+  stType = 'int'; renderSt();
+  doVar(); doExpr(); doLoop(); doFizz(); doFn();
+  showTmpl('int'); doLm('sq'); selShp('Circle'); spRender();
 });
 </script>
+
+<script>
+// ══════════════════════════════════════════════
+//  BOOK  LAYOUT  ENGINE
+// ══════════════════════════════════════════════
+
+var BOOK_TITLES = {
+  's01':'Introduction','s02':'Setup & Compilation','s03':'Fundamental Types',
+  's04':'Variables & Storage','s05':'All Operators','s06':'Control Flow',
+  's07':'Functions','s08':'Arrays & Strings','s09':'Pointers & References',
+  's10':'Dynamic Memory','s11':'Struct / Union / Enum','s12':'Classes & OOP',
+  's13':'Constructors & Rule of 5','s14':'Operator Overloading',
+  's15':'Inheritance & Polymorphism','s16':'Templates','s17':'Exception Handling',
+  's18':'Namespaces & Scope','s19':'Lambdas','s20':'Move Semantics',
+  's21':'Smart Pointers','s22':'STL Containers','s23':'Algorithms',
+  's24':'I/O Streams & Files','s25':'Concurrency',
+  's26':'C++11 & C++14','s27':'C++17','s28':'C++20 & C++23',
+  's29':'Preprocessor','s30':'All Keywords'
+};
+
+function enableBookMode() {
+  BOOK_MODE = true;
+  document.body.classList.add('book-mode');
+  var btn = ge('bk-toggle');
+  if (btn) btn.textContent = '📄 Normal';
+  rebuildBook();
+  try { localStorage.setItem('cpp_book','1'); } catch(e){}
+}
+
+function disableBookMode() {
+  BOOK_MODE = false;
+  document.body.classList.remove('book-mode');
+  var btn = ge('bk-toggle');
+  if (btn) btn.textContent = '📖 Book';
+  // Remove injected book wrap if any
+  var bw = ge('book-wrap-el');
+  if (bw && bw.parentNode) bw.parentNode.removeChild(bw);
+  try { localStorage.removeItem('cpp_book'); } catch(e){}
+}
+
+function toggleBookMode() {
+  if (BOOK_MODE) disableBookMode(); else enableBookMode();
+}
+
+// ── Build book cover (home page) ─────────────
+function buildCover() {
+  var toc_items = SID_LIST.map(function(sid, i) {
+    var num = i+1;
+    var padded = num < 10 ? '0'+num : ''+num;
+    return '<div class="bkcov-toc-item" onclick="bookNav(\'' + sid + '\')">' +
+      '<span class="bkcov-toc-num">§'+padded+'</span>' +
+      '<span class="bkcov-toc-name">'+BOOK_TITLES[sid]+'</span>' +
+      '</div>';
+  }).join('');
+
+  return '<div class="book-cover-wrap" id="book-wrap-el">' +
+    '<div class="book-cover-spine"></div>' +
+    '<div class="book-cover">' +
+      '<div class="bkcov-top">' +
+        '<div class="bkcov-pub">Comprehensive Professional Reference</div>' +
+        '<div class="bkcov-edition">C++20 Edition · Third Printing</div>' +
+        '<div class="bkcov-title">C<span class="pp">++</span></div>' +
+        '<div class="bkcov-sub">The complete guide to modern C++ — every keyword, operator, container and algorithm from C++98 to C++23, with interactive examples.</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="bkcov-rule"></div>' +
+        '<div class="bkcov-toc-title">Table of Contents</div>' +
+        '<div class="bkcov-toc">'+toc_items+'</div>' +
+      '</div>' +
+      '<div class="bkcov-bot">' +
+        '<div class="bkcov-stats">' +
+          '<div class="bkcov-stat"><span class="bkcov-stat-v">30</span><span class="bkcov-stat-l">Chapters</span></div>' +
+          '<div class="bkcov-stat"><span class="bkcov-stat-v">98</span><span class="bkcov-stat-l">Keywords</span></div>' +
+          '<div class="bkcov-stat"><span class="bkcov-stat-v">11</span><span class="bkcov-stat-l">Languages</span></div>' +
+          '<div class="bkcov-stat"><span class="bkcov-stat-v">C++23</span><span class="bkcov-stat-l">Latest Std</span></div>' +
+        '</div>' +
+        '<div class="bkcov-author">Bjarne Stroustrup · ISO C++ Committee · Open Source Contributors</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+// ── Build book spread for a section ──────────
+function buildSpread(sid) {
+  var idx = SID_LIST.indexOf(sid);
+  var num = idx+1;
+  var padded = num < 10 ? '0'+num : ''+num;
+  var title = BOOK_TITLES[sid] || sid;
+  var prevSid = idx > 0 ? SID_LIST[idx-1] : null;
+  var nextSid = idx < SID_LIST.length-1 ? SID_LIST[idx+1] : null;
+
+  // Grab the original page content
+  var origPage = ge('page-'+sid);
+  if (!origPage) return '<div style="padding:40px;color:var(--ink2)">Section not found</div>';
+
+  // Split content: code blocks go to right, rest to left
+  var clone = origPage.cloneNode(true);
+
+  // Remove breadcrumb and sec-nav from clone (we'll have book nav instead)
+  var bc = clone.querySelector('.breadcrumb');
+  if (bc) bc.parentNode.removeChild(bc);
+  var sn = clone.querySelector('.sec-nav');
+  if (sn) sn.parentNode.removeChild(sn);
+
+  // Split into left (meta + text) and right (code + demos)
+  var leftHTML = '', rightHTML = '';
+  var secHd = clone.querySelector('.sec-hd');
+  if (secHd) leftHTML += secHd.outerHTML;
+  var g2 = clone.querySelector('.g2');
+  if (g2) {
+    var children = g2.children;
+    if (children.length >= 2) {
+      leftHTML += '<div style="margin-top:20px">'+children[0].innerHTML+'</div>';
+      rightHTML = children[1].innerHTML;
+    } else {
+      leftHTML += g2.innerHTML;
+    }
+  } else {
+    leftHTML = clone.innerHTML;
+  }
+
+  var leftPage =
+    '<div class="bk-left">' +
+      '<div class="bk-hdr"><span class="bk-hdr-num">§'+padded+'</span><span class="bk-hdr-title">'+title+'</span></div>' +
+      '<div class="bk-body" style="margin-top:18px">'+leftHTML+'</div>' +
+      '<div class="bk-ftr">' +
+        (prevSid ? '<button class="bk-nav-prev" onclick="bookNav(\'' + prevSid + '\')">← ' + BOOK_TITLES[prevSid] + '</button>' : '<span></span>') +
+        '<span class="bk-pgnum">'+(num*2-1)+'</span>' +
+      '</div>' +
+    '</div>';
+
+  var rightPage =
+    '<div class="bk-right">' +
+      '<div class="bk-hdr bk-hdr-right"><span class="bk-hdr-title">C++ Master Reference</span><span class="bk-hdr-num">C++20</span></div>' +
+      '<div class="bk-body" style="margin-top:18px">'+rightHTML+'</div>' +
+      '<div class="bk-ftr">' +
+        '<span class="bk-pgnum">'+(num*2)+'</span>' +
+        (nextSid ? '<button class="bk-nav-next" onclick="bookNav(\'' + nextSid + '\')">' + BOOK_TITLES[nextSid] + ' →</button>' : '<button class="bk-nav-next" onclick="bookNav(\'home\')">Cover ⌂</button>') +
+      '</div>' +
+    '</div>';
+
+  var spineTxt = (num < 10 ? '0'+num : ''+num) + ' / 30';
+  return '<div class="book-wrap" id="book-wrap-el">' +
+    leftPage +
+    '<div class="bk-spine"><div class="bk-spine-txt">'+spineTxt+'</div></div>' +
+    rightPage +
+  '</div>';
+}
+
+// ── Render book view for current page ─────────
+function rebuildBook() {
+  var mn = ge('mn');
+  if (!mn) return;
+
+  // Hide all normal pages
+  document.querySelectorAll('.page').forEach(function(p){ p.style.display='none'; });
+
+  // Remove old book wrap
+  var old = ge('book-wrap-el');
+  if (old && old.parentNode) old.parentNode.removeChild(old);
+
+  // Build new spread
+  var html = (currentPage==='home') ? buildCover() : buildSpread(currentPage);
+
+  // Inject into #mn
+  var div = document.createElement('div');
+  div.innerHTML = html;
+  mn.appendChild(div.firstChild);
+
+  // Re-run highlight on the injected code
+  var bw = ge('book-wrap-el');
+  if (bw) {
+    bw.querySelectorAll('code.language-cpp').forEach(function(el) {
+      delete el.dataset.highlighted;
+      el.removeAttribute('data-highlighted');
+      hljs.highlightElement(el);
+    });
+    // Re-run interactive demos that landed in the spread
+    var toInit = {
+      'te': initTE, 'sviz': renderSort, 'vviz': renderVec,
+      'thviz': initThread, 'kwgrid': initKwGrid, 'prectbl': initPrec,
+      'stdisp': renderSt, 'spviz': spRender, 'mtbd': renderMem,
+      'sfields': initStruct,
+    };
+    Object.keys(toInit).forEach(function(id){
+      if (bw.querySelector('#'+id)) try{ toInit[id](); }catch(e){}
+    });
+  }
+}
+
+// ── Navigate in book mode ─────────────────────
+function bookNav(sid) {
+  // Animate page turn
+  var bw = ge('book-wrap-el');
+  var fwd = (sid==='home') ? false :
+    (currentPage==='home') ? true :
+    SID_LIST.indexOf(sid) > SID_LIST.indexOf(currentPage);
+  if (bw && bw.classList) {
+    bw.classList.add(fwd ? 'flip-fwd' : 'flip-bwd');
+  }
+  setTimeout(function() {
+    currentPage = sid;
+    rebuildBook(); // no URL write - sandbox restricted
+    updateNavHL(sid);
+  }, 180);
+}
+
+// Book mode check is handled inside navigate() directly
+
+// ── Add book toggle button to topbar ────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var tb = ge('tb');
+    if (!tb) return;
+    var btn = document.createElement('button');
+    btn.id = 'bk-toggle';
+    btn.className = 'theme-btn';
+    btn.style.cssText = 'margin-left:8px;font-size:13px;padding:4px 10px;cursor:pointer;border-radius:var(--r);background:var(--raised);border:1px solid var(--border);color:var(--txt2);transition:var(--tr)';
+    btn.textContent = '📖 Book';
+    btn.onclick = toggleBookMode;
+    // Insert before the lang select
+    var lsel = ge('lsel');
+    if (lsel && lsel.parentNode) lsel.parentNode.insertBefore(btn, lsel);
+
+    // Restore book mode from localStorage
+    var saved;
+    try{ saved=localStorage.getItem('cpp_book'); }catch(e){}
+    if (saved==='1') enableBookMode();
+  }, 200);
+});
+</script>
+
 </body>
 </html>
